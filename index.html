@@ -32,6 +32,13 @@ input,textarea{font-family:inherit;font-size:16px}
 .topbar-nav a{padding:6px 12px;border-radius:8px;font-size:.85rem;color:var(--text2);white-space:nowrap;transition:all .2s}
 .topbar-nav a.active{background:var(--accent);color:#fff}
 .topbar-right{display:flex;align-items:center;gap:8px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--card);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom));box-shadow:0 -2px 10px rgba(0,0,0,.05)}
+.bottom-nav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 12px;border-radius:10px;color:var(--text2);font-size:.65rem;transition:all .2s;text-decoration:none}
+.bottom-nav a.active{color:var(--accent)}
+.bottom-nav a.active .bn-icon{transform:scale(1.15)}
+.bn-icon{font-size:1.3rem;transition:transform .2s}
+.bn-label{font-weight:600}
+body{padding-bottom:70px}
 .module-switch{padding:6px 12px;border-radius:8px;font-size:.8rem;font-weight:600;background:var(--bg);border:1px solid var(--border);cursor:pointer}
 .icon-btn{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:background .2s}
 .icon-btn:hover{background:var(--bg)}
@@ -252,14 +259,6 @@ input,textarea{font-family:inherit;font-size:16px}
 
 <header class="topbar">
 <div class="logo"><div class="logo-icon">学</div><span>学霸</span></div>
-<nav class="topbar-nav" id="topNav">
-<a href="#/home" data-view="home" class="active">首页</a>
-<a href="#/knowledge" data-view="knowledge">知识目录</a>
-<a href="#/quiz" data-view="quiz">每日一练</a>
-<a href="#/errors" data-view="errors">错题本</a>
-<a href="#/formula" data-view="formula">公式考察</a>
-<a href="#/favorites" data-view="favorites">收藏</a>
-</nav>
 <div class="topbar-right">
 <button class="module-switch" id="currentModuleName" onclick="navigate('modules')">数学</button>
 <button class="icon-btn" onclick="navigate('settings')" title="设置">⚙️</button>
@@ -384,6 +383,7 @@ input,textarea{font-family:inherit;font-size:16px}
 <div class="container">
 <div class="page-header"><h2>设置</h2></div>
 <div class="settings-list">
+<div class="settings-item" onclick="navigate('favorites')" style="cursor:pointer"><div><div class="si-label">⭐ 我的收藏</div><div class="si-desc">查看收藏的好题</div></div><span style="color:var(--text2)">›</span></div>
 <div class="settings-item"><div><div class="si-label">深色模式</div><div class="si-desc">保护视力，夜间学习更舒适</div></div><div class="switch" id="darkSwitch" onclick="toggleDarkMode()"></div></div>
 <div class="settings-item"><div><div class="si-label">导出学习数据</div><div class="si-desc">将错题、收藏、统计导出为JSON备份</div></div><button class="btn btn-secondary btn-sm" onclick="exportData()">导出</button></div>
 <div class="settings-item"><div><div class="si-label">导入学习数据</div><div class="si-desc">从备份文件恢复学习数据</div></div><label class="btn btn-secondary btn-sm"><input type="file" accept=".json" style="display:none" onchange="importData(event)">导入</label></div>
@@ -1038,7 +1038,7 @@ setTimeout(()=>{if(!DB.get('installPromptShown',false)&&window.matchMedia('(disp
 function navigate(view){location.hash='#/'+view}
 function handleRoute(){const hash=location.hash.replace('#/','')||'home';const views=['home','knowledge','quiz','errors','formula','favorites','modules','settings'];const view=views.includes(hash)?hash:'home';
 document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const el=document.getElementById('view-'+view);if(el)el.classList.add('active');
-document.querySelectorAll('.topbar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.view===view));
+document.querySelectorAll('.bottom-nav a').forEach(a=>a.classList.toggle('active',a.dataset.view===view));
 if(view==='home')renderHome();else if(view==='knowledge')renderKnowledgeSidebar();else if(view==='quiz'){if(State.quiz.phase==='setup')renderQuizSetup()}else if(view==='errors')renderErrors();else if(view==='formula'){if(State.formula.tab==='list')renderFormulaList()}else if(view==='favorites')renderFavorites();else if(view==='modules')renderModules();
 window.scrollTo(0,0)}
 window.addEventListener('hashchange',handleRoute);
@@ -1062,5 +1062,29 @@ init();
 BankInitializer.init();
 });
 </script>
+<!-- ===== 底部导航 ===== -->
+<nav class="bottom-nav" id="bottomNav">
+<a href="#/home" data-view="home" class="active">
+<span class="bn-icon">🏠</span>
+<span class="bn-label">首页</span>
+</a>
+<a href="#/knowledge" data-view="knowledge">
+<span class="bn-icon">📖</span>
+<span class="bn-label">知识</span>
+</a>
+<a href="#/quiz" data-view="quiz">
+<span class="bn-icon">📝</span>
+<span class="bn-label">刷题</span>
+</a>
+<a href="#/errors" data-view="errors">
+<span class="bn-icon">📕</span>
+<span class="bn-label">错题</span>
+</a>
+<a href="#/formula" data-view="formula">
+<span class="bn-icon">📐</span>
+<span class="bn-label">公式</span>
+</a>
+</nav>
+
 </body>
 </html>
