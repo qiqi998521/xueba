@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>学霸 - 智能学习平台</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{--bg:#f8f9fa;--card:#ffffff;--text:#1a1a2e;--text2:#6b7280;--border:#e5e7eb;--accent:#4f6ef7;--success:#34c759;--warning:#ff9500;--danger:#ff3b30;--radius:14px;--shadow:0 2px 12px rgba(0,0,0,.06)}
+body.dark{--bg:#1a1a2e;--card:#252540;--text:#e8e8f0;--text2:#9ca3af;--border:#3a3a5c;--shadow:0 2px 12px rgba(0,0,0,.3)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;transition:background .3s,color .3s}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea{font-family:inherit;font-size:16px}
+.topbar{position:sticky;top:0;z-index:100;background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(10px)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.15rem}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;font-weight:900}
+.topbar-nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.topbar-nav::-webkit-scrollbar{display:none}
+.topbar-nav a{padding:6px 12px;border-radius:8px;font-size:.85rem;color:var(--text2);white-space:nowrap;transition:all .2s}
+.topbar-nav a.active{background:var(--accent);color:#fff}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.module-switch{padding:6px 12px;border-radius:8px;font-size:.8rem;font-weight:600;background:var(--bg);border:1px solid var(--border);cursor:pointer}
+.icon-btn{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:background .2s}
+.icon-btn:hover{background:var(--bg)}
+.view{display:none;animation:fadeIn .3s ease}
+.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.container{max-width:900px;margin:0 auto;padding:16px}
+.hero{text-align:center;padding:32px 16px 24px}
+.hero h1{font-size:2rem;font-weight:900;margin-bottom:6px;background:linear-gradient(135deg,var(--accent),#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text2);font-size:.9rem}
+.streak-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:#fff3cd;border-radius:20px;font-size:.75rem;font-weight:600;color:#856404;margin-bottom:8px}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.quick-card{background:var(--card);border-radius:var(--radius);padding:16px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid var(--border)}
+.quick-card:active{transform:scale(.97)}
+.quick-card .qc-icon{font-size:1.5rem;margin-bottom:6px}
+.quick-card h3{font-size:.9rem;font-weight:700}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.feature-card{background:var(--card);border-radius:var(--radius);padding:20px 16px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid var(--border)}
+.feature-card:active{transform:scale(.97)}
+.fc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 10px}
+.feature-card h3{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.feature-card p{font-size:.75rem;color:var(--text2);line-height:1.4}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px}
+.stat-card{background:var(--card);border-radius:var(--radius);padding:12px 4px;text-align:center;border:1px solid var(--border)}
+.stat-num{font-size:1.3rem;font-weight:800;color:var(--accent)}
+.stat-label{font-size:.65rem;color:var(--text2);margin-top:2px}
+.review-banner{background:linear-gradient(135deg,#fff3cd,#ffeaa7);border-radius:var(--radius);padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.review-banner h3{font-size:.9rem;font-weight:700;color:#856404}
+.review-banner p{font-size:.75rem;color:#856404}
+.btn{padding:10px 20px;border-radius:10px;font-size:.85rem;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:active{transform:scale(.97)}
+.btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:6px 12px;font-size:.75rem}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.page-header h2{font-size:1.3rem;font-weight:800}
+.tabs{display:flex;gap:4px;background:var(--bg);border-radius:10px;padding:3px;margin-bottom:16px;overflow-x:auto}
+.tabs button{padding:8px 14px;border-radius:8px;font-size:.8rem;font-weight:600;color:var(--text2);white-space:nowrap;transition:all .2s}
+.tabs button.active{background:var(--card);color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.search-box{position:relative;margin-bottom:16px}
+.search-box input{width:100%;padding:10px 14px 10px 38px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.9rem;outline:none;transition:border .2s}
+.search-box input:focus{border-color:var(--accent)}
+.search-box::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.85rem}
+.kn-layout{display:grid;grid-template-columns:240px 1fr;gap:16px}
+.kn-menu-btn{display:none}
+@media(max-width:640px){.kn-layout{grid-template-columns:1fr}.kn-sidebar{position:static;transform:none;width:100%;max-height:280px;margin-bottom:12px}.kn-menu-btn{display:none}}
+.kn-sidebar{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:12px;max-height:calc(100vh - 100px);overflow-y:auto}
+.kn-group{margin-bottom:8px}
+.kn-group-title{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;font-weight:700;font-size:.85rem;cursor:pointer;border-radius:8px}
+.kn-group-title:hover{background:var(--bg)}
+.kn-group-title .count{font-size:.7rem;color:var(--text2);background:var(--bg);padding:2px 6px;border-radius:10px}
+.kn-group-items{display:none;padding-left:8px}
+.kn-group-items.open{display:block}
+.kn-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;font-size:.8rem;border-radius:6px;cursor:pointer;color:var(--text2);transition:all .15s}
+.kn-item:hover{background:var(--bg);color:var(--text)}
+.kn-item.active{background:var(--accent);color:#fff}
+.mastery-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.kn-detail{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:24px;min-height:400px}
+.kn-detail h2{font-size:1.4rem;font-weight:800;margin-bottom:10px}
+.kn-meta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tag{display:inline-block;padding:3px 8px;border-radius:6px;font-size:.7rem;font-weight:600}
+.tag-blue{background:#e8edff;color:var(--accent)}
+.tag-gray{background:var(--bg);color:var(--text2)}
+.tag-red{background:#ffe5e5;color:var(--danger)}
+.tag-orange{background:#fff3e0;color:var(--warning)}
+.tag-green{background:#e8f5e9;color:var(--success)}
+.prereq-box{background:var(--bg);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:.8rem;color:var(--text2)}
+.prereq-box a{color:var(--accent);cursor:pointer;font-weight:600}
+.kn-section{margin-bottom:20px}
+.kn-section h3{display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:700;margin-bottom:8px}
+.sec-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;flex-shrink:0}
+.kn-section p{font-size:.9rem;color:var(--text2);line-height:1.8;padding-left:36px}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text2)}
+.empty-state p{font-size:.9rem}
+.quiz-setup{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:24px}
+.setup-section{margin-bottom:24px}
+.setup-section h3{font-size:.95rem;font-weight:700;margin-bottom:12px}
+.type-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:480px){.type-grid{grid-template-columns:repeat(2,1fr)}}
+.type-option{border:2px solid var(--border);border-radius:12px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.type-option.selected{border-color:var(--accent);background:#f0f3ff}
+.to-icon{font-size:1.4rem;margin-bottom:4px}
+.to-label{font-size:.75rem;font-weight:600;color:var(--text2)}
+.type-option.selected .to-label{color:var(--accent)}
+.slider-row{display:flex;align-items:center;gap:14px}
+.slider-row input[type=range]{flex:1;accent-color:var(--accent)}
+.slider-val{font-size:1.2rem;font-weight:800;color:var(--accent);min-width:40px;text-align:center}
+.switch-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
+.switch{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background .2s}
+.switch.on{background:var(--accent)}
+.switch::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch.on::after{transform:translateX(20px)}
+.timer-input{display:none;align-items:center;gap:10px;margin-top:10px}
+.timer-input input{width:60px;padding:6px 10px;border:1px solid var(--border);border-radius:8px;text-align:center;font-size:.9rem}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.quiz-timer{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--bg);border-radius:20px;font-weight:700;font-size:.9rem}
+.quiz-timer.warning{background:#ffe5e5;color:var(--danger);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.quiz-progress{margin-bottom:20px}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#7c3aed);border-radius:3px;transition:width .3s}
+.progress-text{font-size:.75rem;color:var(--text2);text-align:right}
+.question-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:24px;margin-bottom:16px;min-height:200px}
+.q-actions{display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px}
+.q-action-btn{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;background:var(--bg);cursor:pointer;transition:all .2s}
+.q-action-btn.active{background:#fff3cd}
+.q-num{margin-bottom:14px;display:flex;gap:6px;align-items:center}
+.q-text{font-size:1.05rem;line-height:1.8;margin-bottom:20px;font-weight:500}
+.hint-box{background:#fffde7;border-left:3px solid var(--warning);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:.85rem;color:#856404}
+.options-list{display:flex;flex-direction:column;gap:10px}
+.option-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all .2s}
+.option-item:hover{border-color:var(--accent)}
+.option-item.selected{border-color:var(--accent);background:#f0f3ff}
+.opt-label{width:32px;height:32px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.option-item.selected .opt-label{background:var(--accent);color:#fff}
+.opt-text{font-size:.9rem;flex:1}
+.fill-input{width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:12px;font-size:1rem;outline:none;transition:border .2s;background:var(--card);color:var(--text)}
+.fill-input:focus{border-color:var(--accent)}
+.textarea-input{width:100%;min-height:120px;padding:12px 16px;border:2px solid var(--border);border-radius:12px;font-size:.95rem;outline:none;resize:vertical;transition:border .2s;background:var(--card);color:var(--text);line-height:1.6}
+.textarea-input:focus{border-color:var(--accent)}
+.quiz-nav{display:flex;justify-content:space-between;gap:12px}
+.question-dots{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;justify-content:center}
+.q-dot{width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s}
+.q-dot.answered{background:#d1fae5;color:var(--success)}
+.q-dot.current{background:var(--accent);color:#fff;transform:scale(1.15)}
+.score-ring{position:relative;width:180px;height:180px;margin:0 auto 20px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-num{font-size:2.5rem;font-weight:900}
+.score-label{font-size:.85rem;color:var(--text2)}
+.result-stats{display:flex;justify-content:center;gap:32px;margin-bottom:24px}
+.result-stat{text-align:center}
+.rs-num{font-size:1.5rem;font-weight:800}
+.rs-label{font-size:.75rem;color:var(--text2)}
+.wrong-list{margin-top:20px}
+.wrong-list h3{font-size:1rem;font-weight:700;margin-bottom:14px}
+.wrong-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;border-left:3px solid var(--danger)}
+.wi-header{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.wi-q{font-size:.9rem;font-weight:600;margin-bottom:10px;line-height:1.6}
+.wi-answers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+@media(max-width:480px){.wi-answers{grid-template-columns:1fr}}
+.wi-answer{padding:8px 12px;border-radius:8px;font-size:.8rem}
+.wi-user{background:#ffe5e5;color:var(--danger)}
+.wi-correct{background:#e8f5e9;color:var(--success)}
+.wi-explain{background:var(--bg);padding:10px 14px;border-radius:8px;font-size:.8rem;color:var(--text2);line-height:1.6}
+.error-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:480px){.error-overview{grid-template-columns:repeat(2,1fr)}}
+.error-stat{background:var(--card);border-radius:var(--radius);padding:14px;text-align:center;border:1px solid var(--border)}
+.es-num{font-size:1.4rem;font-weight:800}
+.es-label{font-size:.7rem;color:var(--text2);margin-top:2px}
+.high-risk-alert{background:#ffe5e5;border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.high-risk-alert p{font-size:.85rem;color:var(--danger)}
+.rate-bars{margin-bottom:20px}
+.rate-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rb-label{width:80px;font-size:.75rem;font-weight:600;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rb-track{flex:1;height:20px;background:var(--bg);border-radius:10px;overflow:hidden}
+.rb-fill{height:100%;border-radius:10px;transition:width .5s}
+.rb-count{width:70px;font-size:.7rem;color:var(--text2);text-align:right;flex-shrink:0}
+.error-list{display:flex;flex-direction:column;gap:10px}
+.error-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:14px;cursor:pointer;transition:transform .2s}
+.error-card:active{transform:scale(.98)}
+.ec-header{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.ec-q{font-size:.85rem;font-weight:600;margin-bottom:8px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ec-meta{display:flex;justify-content:space-between;font-size:.7rem;color:var(--text2)}
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.formula-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px;transition:transform .2s}
+.formula-card:active{transform:scale(.98)}
+.fc-category{font-size:.7rem;color:var(--text2);margin-bottom:6px}
+.fc-name{font-size:.85rem;font-weight:600;margin-bottom:8px;line-height:1.5}
+.fc-formula{font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:6px;padding:8px;background:var(--bg);border-radius:8px;text-align:center}
+.fc-desc{font-size:.75rem;color:var(--text2);line-height:1.5}
+.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.module-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:20px;transition:transform .2s}
+.mc-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.mc-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.mc-info h3{font-size:1.05rem;font-weight:700}
+.mc-info p{font-size:.75rem;color:var(--text2)}
+.mc-desc{font-size:.8rem;color:var(--text2);margin-bottom:10px;line-height:1.5}
+.mc-stats{font-size:.75rem;color:var(--text2);margin-bottom:14px}
+.mc-action{width:100%}
+.settings-list{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.settings-item{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.settings-item:last-child{border-bottom:none}
+.si-label{font-size:.9rem;font-weight:600}
+.si-desc{font-size:.75rem;color:var(--text2);margin-top:2px}
+.onboarding-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.onboarding-overlay.show{display:flex}
+.onboarding-card{background:var(--card);border-radius:20px;padding:32px 28px;max-width:380px;width:100%;text-align:center;animation:slideUp .4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.ob-icon{font-size:3rem;margin-bottom:16px}
+.ob-title{font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.ob-text{font-size:.85rem;color:var(--text2);line-height:1.7;margin-bottom:24px}
+.ob-dots{display:flex;justify-content:center;gap:6px;margin-bottom:20px}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s}
+.ob-dot.active{width:24px;background:var(--accent);border-radius:4px}
+.ob-buttons{display:flex;gap:10px;justify-content:center}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal-card{background:var(--card);border-radius:16px;padding:24px;max-width:440px;width:100%;max-height:80vh;overflow-y:auto;animation:slideUp .3s ease}
+.modal-card h3{font-size:1.1rem;font-weight:700;margin-bottom:16px}
+.modal-card textarea{width:100%;min-height:100px;padding:12px;border:2px solid var(--border);border-radius:10px;font-size:.9rem;resize:vertical;outline:none;background:var(--card);color:var(--text)}
+.modal-card textarea:focus{border-color:var(--accent)}
+.btn-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--bg);cursor:pointer}
+.toast-container{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:2000;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{background:var(--text);color:var(--bg);padding:10px 20px;border-radius:10px;font-size:.85rem;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.15);animation:toastIn .3s ease,toastOut .3s ease 2.3s forwards}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateY(-10px)}}
+.loading-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),#7c3aed);z-index:3000;transition:width .3s}
+.install-prompt{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--card);border-radius:14px;padding:14px 20px;box-shadow:0 4px 20px rgba(0,0,0,.15);display:none;align-items:center;gap:12px;z-index:900;max-width:90%}
+.install-prompt.show{display:flex;animation:slideUp .3s ease}
+.install-prompt p{font-size:.8rem;font-weight:600;flex:1}
+</style>
+</head>
+<body>
+<div class="loading-bar" id="loadingBar" style="width:0%"></div>
+<div class="toast-container" id="toastContainer"></div>
+
+<header class="topbar">
+<div class="logo"><div class="logo-icon">学</div><span>学霸</span></div>
+<nav class="topbar-nav" id="topNav">
+<a href="#/home" data-view="home" class="active">首页</a>
+<a href="#/knowledge" data-view="knowledge">知识目录</a>
+<a href="#/quiz" data-view="quiz">每日一练</a>
+<a href="#/errors" data-view="errors">错题本</a>
+<a href="#/formula" data-view="formula">公式考察</a>
+<a href="#/favorites" data-view="favorites">收藏</a>
+</nav>
+<div class="topbar-right">
+<button class="module-switch" id="currentModuleName" onclick="navigate('modules')">数学</button>
+<button class="icon-btn" onclick="navigate('settings')" title="设置">⚙️</button>
+</div>
+</header>
+
+<!-- ===== 首页 ===== -->
+<main class="view active" id="view-home">
+<div class="container">
+<div class="hero">
+<div class="streak-badge" id="streakBadge" style="display:none"></div>
+<h1>学霸</h1>
+<p>高效学习 · 智能刷题 · 错题攻克</p>
+</div>
+<div class="quick-actions">
+<div class="quick-card" onclick="quickQuiz()"><div class="qc-icon">⚡</div><h3>快速刷题</h3></div>
+<div class="quick-card" onclick="startMockExam()"><div class="qc-icon">🎯</div><h3>真实模考</h3></div>
+</div>
+<div class="review-banner" id="reviewBanner" style="display:none"></div>
+<div class="feature-grid" id="featureGrid"></div>
+<div class="stats-row" id="homeStats"></div>
+</div>
+</main>
+
+<!-- ===== 知识目录 ===== -->
+<main class="view" id="view-knowledge">
+<div class="container">
+<div class="page-header"><h2>知识目录</h2></div>
+<div class="search-box"><input type="text" id="knSearchInput" placeholder="搜索知识点..." oninput="filterKnowledge()"></div>
+<div class="kn-layout">
+<aside class="kn-sidebar" id="knSidebar">
+<div class="tabs" id="knLevelTabs"></div>
+<div id="knGroupList"></div>
+</aside>
+<div class="kn-detail" id="knDetail"><div class="empty-state"><p>从左侧选择一个知识点开始学习</p></div></div>
+</div>
+</div>
+</main>
+
+<!-- ===== 每日一练 ===== -->
+<main class="view" id="view-quiz">
+<div class="container">
+<div id="quizSetupView">
+<div class="page-header"><h2>每日一练</h2></div>
+<div class="quiz-setup">
+<div class="setup-section"><h3>选择题型</h3><div class="type-grid" id="typeGrid"></div></div>
+<div class="setup-section"><h3>选择学段</h3><div class="tabs" id="quizLevelTabs"></div></div>
+<div class="setup-section"><h3>题目数量</h3><div class="slider-row"><input type="range" id="qCountRange" min="3" max="10" value="5" oninput="updateQCount()"><span class="slider-val" id="qCountVal">5</span></div></div>
+<div class="setup-section">
+<div class="switch-row"><span><strong>倒计时</strong><br><span style="font-size:.75rem;color:var(--text2)">开启后限时答题，时间到自动提交</span></span><div class="switch" id="timerSwitch" onclick="toggleTimer()"></div></div>
+<div class="timer-input" id="timerInput"><span>时长：</span><input type="number" id="timerMinutes" value="15" min="5" max="60"><span>分钟</span></div>
+</div>
+<button class="btn btn-primary" style="width:100%;padding:14px;font-size:1rem" onclick="startQuiz()">开始练习</button>
+</div>
+</div>
+<div id="quizPlayView" style="display:none">
+<div class="quiz-header">
+<div class="quiz-progress" style="flex:1;margin-bottom:0"><div class="progress-bar"><div class="progress-fill" id="quizProgressFill"></div></div><div class="progress-text" id="quizProgressText"></div></div>
+<div class="quiz-timer" id="quizTimer" style="display:none"><span>⏱</span><span id="quizTimerText">15:00</span></div>
+</div>
+<div class="question-dots" id="questionDots"></div>
+<div class="question-card" id="questionCard"></div>
+<div class="quiz-nav"><button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">上一题</button><button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">下一题</button></div>
+</div>
+<div id="quizResultView" style="display:none"><div id="quizResultContent"></div></div>
+</div>
+</main>
+
+<!-- ===== 错题本 ===== -->
+<main class="view" id="view-errors">
+<div class="container">
+<div class="page-header"><h2>错题本</h2></div>
+<div class="error-overview" id="errorOverview"></div>
+<div class="high-risk-alert" id="highRiskAlert" style="display:none"></div>
+<div class="page-header" style="margin-bottom:10px"><h3 style="font-size:.95rem">模块错误率</h3></div>
+<div class="rate-bars" id="rateBars"></div>
+<div class="tabs" id="errorFilters" style="margin-top:16px"></div>
+<div class="error-list" id="errorList"></div>
+</div>
+</main>
+
+<!-- ===== 公式考察 ===== -->
+<main class="view" id="view-formula">
+<div class="container">
+<div class="page-header"><h2>公式考察</h2></div>
+<div class="tabs"><button class="active" onclick="switchFormulaTab('list',this)">公式列表</button><button onclick="switchFormulaTab('quiz',this)">公式测验</button></div>
+<div id="formulaListView"><div class="formula-grid" id="formulaList"></div></div>
+<div id="formulaQuizView" style="display:none">
+<div id="formulaQuizSetup">
+<div class="quiz-setup">
+<div class="setup-section"><h3>测验形式</h3><div class="type-grid"><div class="type-option selected" data-ftype="fill" onclick="selectFType(this)"><div class="to-icon">✏️</div><div class="to-label">填空</div></div><div class="type-option" data-ftype="answer" onclick="selectFType(this)"><div class="to-icon">📝</div><div class="to-label">简答</div></div></div></div>
+<div class="setup-section"><h3>题目数量</h3><div class="slider-row"><input type="range" id="fCountRange" min="3" max="10" value="5" oninput="State.formula.fcount=parseInt(this.value);document.getElementById('fCountVal').textContent=this.value"><span class="slider-val" id="fCountVal">5</span></div></div>
+<button class="btn btn-primary" style="width:100%;padding:14px" onclick="startFormulaQuiz()">开始测验</button>
+</div>
+</div>
+<div id="formulaQuizPlay" style="display:none"></div>
+<div id="formulaQuizResult" style="display:none"></div>
+</div>
+</div>
+</main>
+
+<!-- ===== 收藏夹 ===== -->
+<main class="view" id="view-favorites">
+<div class="container">
+<div class="page-header"><h2>我的收藏</h2></div>
+<div id="favoritesList"></div>
+</div>
+</main>
+
+<!-- ===== 学科中心 ===== -->
+<main class="view" id="view-modules">
+<div class="container">
+<div class="page-header"><h2>学科中心</h2></div>
+<p style="color:var(--text2);font-size:.85rem;margin-bottom:16px">切换学习模块，所有学习数据独立保存</p>
+<div class="module-grid" id="moduleGrid"></div>
+</div>
+</main>
+
+<!-- ===== 设置 ===== -->
+<main class="view" id="view-settings">
+<div class="container">
+<div class="page-header"><h2>设置</h2></div>
+<div class="settings-list">
+<div class="settings-item"><div><div class="si-label">深色模式</div><div class="si-desc">保护视力，夜间学习更舒适</div></div><div class="switch" id="darkSwitch" onclick="toggleDarkMode()"></div></div>
+<div class="settings-item"><div><div class="si-label">导出学习数据</div><div class="si-desc">将错题、收藏、统计导出为JSON备份</div></div><button class="btn btn-secondary btn-sm" onclick="exportData()">导出</button></div>
+<div class="settings-item"><div><div class="si-label">导入学习数据</div><div class="si-desc">从备份文件恢复学习数据</div></div><label class="btn btn-secondary btn-sm"><input type="file" accept=".json" style="display:none" onchange="importData(event)">导入</label></div>
+<div class="settings-item"><div><div class="si-label">重置所有数据</div><div class="si-desc">清除错题、收藏、统计，不可恢复</div></div><button class="btn btn-danger btn-sm" onclick="resetAllData()">重置</button></div>
+<div class="settings-item"><div><div class="si-label">题库状态</div><div class="si-desc" id="dbStatusText">加载中...</div></div></div>
+<div class="settings-item"><div><div class="si-label">版本</div><div class="si-desc">学霸 V3.0 PWA完整版</div></div></div>
+</div>
+</div>
+</main>
+
+<!-- ===== 新手引导 ===== -->
+<div class="onboarding-overlay" id="onboardingOverlay">
+<div class="onboarding-card">
+<div class="ob-icon" id="obIcon">📚</div>
+<h2 class="ob-title" id="obTitle">欢迎使用学霸</h2>
+<p class="ob-text" id="obText">你的专属学习平台</p>
+<div class="ob-dots" id="obDots"></div>
+<div class="ob-buttons">
+<button class="btn btn-secondary" id="obSkip" onclick="finishOnboarding()">跳过</button>
+<button class="btn btn-primary" id="obNext" onclick="nextOnboarding()">下一步</button>
+</div>
+</div>
+</div>
+
+<!-- ===== 纠错弹窗 ===== -->
+<div class="modal-overlay" id="feedbackModal">
+<div class="modal-card">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="margin:0">题目纠错</h3><button class="btn-icon" onclick="document.getElementById('feedbackModal').classList.remove('show')">✕</button></div>
+<p style="font-size:.85rem;color:var(--text2);margin-bottom:12px">请描述题目中的问题（答案错误、解析有误、题目不清等）</p>
+<textarea id="feedbackText" placeholder="请输入反馈内容..."></textarea>
+<div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px"><button class="btn btn-secondary" onclick="document.getElementById('feedbackModal').classList.remove('show')">取消</button><button class="btn btn-primary" onclick="submitFeedback()">提交反馈</button></div>
+</div>
+</div>
+
+<!-- ===== 错题详情弹窗 ===== -->
+<div class="modal-overlay" id="errorDetailModal">
+<div class="modal-card" id="errorDetailContent"></div>
+</div>
+
+<!-- ===== 安装提示 ===== -->
+<div class="install-prompt" id="installPrompt">
+<p>📱 把学霸添加到桌面，像App一样使用</p>
+<button class="btn btn-primary btn-sm" onclick="showInstallGuide()">知道了</button>
+</div>
+
+<script>
+/* ===== IndexedDB 封装（内存缓存+异步持久化） ===== */
+const DB=(function(){
+let cache={};
+let db=null;
+const DB_NAME='xueba_db';
+const DB_VERSION=1;
+const STORE='kv_store';
+function open(){
+return new Promise((resolve,reject)=>{
+const req=indexedDB.open(DB_NAME,DB_VERSION);
+req.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE)};
+req.onsuccess=e=>{db=e.target.result;loadAll().then(resolve)};
+req.onerror=e=>reject(e.target.error);
+});
+}
+function loadAll(){
+return new Promise((resolve)=>{
+if(!db){resolve();return}
+const tx=db.transaction(STORE,'readonly');
+const store=tx.objectStore(STORE);
+const req=store.getAll();
+req.onsuccess=()=>{
+const items=req.result||[];
+// getAll返回的是值数组，需要重新读取key
+const keyReq=store.getAllKeys();
+keyReq.onsuccess=()=>{
+const keys=keyReq.result||[];
+keys.forEach((k,i)=>{cache[k]=items[i]});
+resolve();
+};
+keyReq.onerror=()=>resolve();
+};
+req.onerror=()=>resolve();
+});
+}
+function get(k,d){return cache[k]!==undefined?cache[k]:d}
+function set(k,v){
+cache[k]=v;
+if(db){
+try{
+const tx=db.transaction(STORE,'readwrite');
+tx.objectStore(STORE).put(v,k);
+}catch(e){}
+}
+}
+function remove(k){delete cache[k];if(db){try{db.transaction(STORE,'readwrite').objectStore(STORE).delete(k)}catch(e){}}}
+function clear(){cache={};if(db){try{db.transaction(STORE,'readwrite').objectStore(STORE).clear()}catch(e){}}}
+return{open,get,set,remove,clear,getCache:()=>cache};
+})();
+
+/* ===== 题库 IndexedDB（存储变式生成题） ===== */
+const QuestionBank=(function(){
+let db=null;
+const DB_NAME='xueba_questions';
+const DB_VERSION=1;
+const STORE='questions';
+function open(){
+return new Promise((resolve)=>{
+const req=indexedDB.open(DB_NAME,DB_VERSION);
+req.onupgradeneeded=e=>{
+const d=e.target.result;
+if(!d.objectStoreNames.contains(STORE)){
+const store=d.createObjectStore(STORE,{keyPath:'id'});
+store.createIndex('module','module',{unique:false});
+store.createIndex('level','level',{unique:false});
+store.createIndex('type','type',{unique:false});
+store.createIndex('knowledgeId','knowledgeId',{unique:false});
+}
+};
+req.onsuccess=e=>{db=e.target.result;resolve()};
+req.onerror=()=>resolve();
+});
+}
+function count(){
+return new Promise(resolve=>{
+if(!db){resolve(0);return}
+const req=db.transaction(STORE,'readonly').objectStore(STORE).count();
+req.onsuccess=()=>resolve(req.result);
+req.onerror=()=>resolve(0);
+});
+}
+function add(q){
+if(!db)return;
+try{db.transaction(STORE,'readwrite').objectStore(STORE).put(q)}catch(e){}
+}
+function addBatch(qs){
+if(!db||qs.length===0)return;
+const tx=db.transaction(STORE,'readwrite');
+const store=tx.objectStore(STORE);
+qs.forEach(q=>{try{store.put(q)}catch(e){}});
+}
+function query(filter){
+return new Promise(resolve=>{
+if(!db){resolve([]);return}
+const tx=db.transaction(STORE,'readonly');
+const store=tx.objectStore(STORE);
+const req=store.getAll();
+req.onsuccess=()=>{
+let all=req.result||[];
+if(filter){
+if(filter.module)all=all.filter(q=>q.module===filter.module);
+if(filter.level)all=all.filter(q=>q.level===filter.level);
+if(filter.type)all=all.filter(q=>filter.type.includes(q.type));
+if(filter.knowledgeId)all=all.filter(q=>q.knowledgeId===filter.knowledgeId);
+}
+resolve(all);
+};
+req.onerror=()=>resolve([]);
+});
+}
+function clear(){
+if(!db)return;
+try{db.transaction(STORE,'readwrite').objectStore(STORE).clear()}catch(e){}
+}
+return{open,count,add,addBatch,query,clear};
+})();
+
+/* ===== 工具函数 ===== */
+function showToast(m){const c=document.getElementById('toastContainer');const t=document.createElement('div');t.className='toast';t.textContent=m;c.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function renderMath(){if(window.renderMathInElement){renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false})}}
+function toggleSidebar(){document.getElementById('knSidebar').classList.toggle('open')}
+
+/* ===== 题目→知识点映射 ===== */
+const Q_K_MAP={mq1:'m-jh-1',mq2:'m-jh-2',mq3:'m-jh-3',mq4:'m-jh-4',mq5:'m-jh-5',mq6:'m-jh-1',mq7:'m-jh-4',mq8:'m-jh-1',mq9:'m-jh-3',mq10:'m-jh-3',mq11:'m-gh-1',mq12:'m-gh-2',mq13:'m-gh-3',mq14:'m-gh-4',mq15:'m-gh-6',mq16:'m-gh-1',mq17:'m-gh-5',mq18:'m-gh-3',mq19:'m-gh-4',mq20:'m-gh-1',mq21:'m-dx-1',mq22:'m-dx-2',mq23:'m-dx-4',mq24:'m-dx-6',mq25:'m-dx-2',mq26:'m-dx-4',mq27:'m-dx-3',mq28:'m-dx-4',mq29:'m-dx-3',mq30:'m-dx-6',mq31:'m-jh-2',mq32:'m-gh-2',mq33:'m-dx-1',mq34:'m-gh-5',mq35:'m-jh-5',mq36:'m-gh-6',mq37:'m-dx-5',mq38:'m-dx-6',mq39:'m-gh-4',mq40:'m-jh-4'};
+
+/* ===== 数学模块 ===== */
+const MATH_MODULE={id:'math',name:'数学',type:'standard',icon:'📐',color:'#4f6ef7',desc:'初中到大学数学，代数几何函数微积分',levels:['初中','高中','大学']};
+const MATH_KNOWLEDGE=[
+{id:'m-jh-1',level:'初中',module:'数与式',title:'有理数',prereq:[],what:'有理数是整数和分数的统称。',why:'有理数是代数基础。',how:'同号相加取同号，异号相加取绝对值大的符号。',do:'先判断符号再算绝对值。'},
+{id:'m-jh-2',level:'初中',module:'数与式',title:'整式的运算',prereq:['m-jh-1'],what:'整式是单项式和多项式的统称。',why:'整式运算是代数运算核心。',how:'合并同类项，乘法公式：平方差、完全平方。',do:'完全平方不要漏中间项2ab。'},
+{id:'m-jh-3',level:'初中',module:'方程与不等式',title:'一元一次方程',prereq:['m-jh-2'],what:'只含一个未知数且次数为1的整式方程。',why:'方程是刻画等量关系的工具。',how:'去分母→去括号→移项→合并→系数化为1。',do:'去分母不要漏乘，移项要变号。'},
+{id:'m-jh-4',level:'初中',module:'方程与不等式',title:'一元二次方程',prereq:['m-jh-3'],what:'未知数最高次数为2的整式方程。',why:'连接初中代数与高中函数。',how:'公式法、配方法、因式分解法。判别式Δ=b²-4ac。',do:'先化标准形式，韦达定理可简化计算。'},
+{id:'m-jh-5',level:'初中',module:'图形与几何',title:'三角形全等与相似',prereq:[],what:'全等是完全重合，相似是对应角相等对应边成比例。',why:'平面几何核心工具。',how:'全等：SSS/SAS/ASA/AAS/HL。相似：AA/SAS/SSS。',do:'对应关系要找准，面积比是相似比的平方。'},
+{id:'m-gh-1',level:'高中',module:'函数',title:'函数的概念与性质',prereq:['m-jh-4'],what:'函数是数集间的对应关系。',why:'高中数学核心主线。',how:'三要素：定义域、对应关系、值域。性质：单调性、奇偶性、周期性。',do:'定义域优先，奇偶性先看定义域是否对称。'},
+{id:'m-gh-2',level:'高中',module:'函数',title:'指数函数与对数函数',prereq:['m-gh-1'],what:'y=a^x和y=log_a x互为反函数。',why:'描述增长和衰减现象。',how:'指数运算、对数运算、换底公式。',do:'对数真数必须大于0，比较大小用单调性。'},
+{id:'m-gh-3',level:'高中',module:'三角函数',title:'三角函数图像与性质',prereq:['m-gh-1'],what:'正弦、余弦、正切函数。',why:'描述周期现象。',how:'y=Asin(ωx+φ)的振幅、周期、相位。',do:'求单调区间用整体代换，图像变换注意顺序。'},
+{id:'m-gh-4',level:'高中',module:'数列',title:'等差数列与等比数列',prereq:['m-gh-1'],what:'等差是公差恒定，等比是公比恒定。',why:'高考必考内容。',how:'通项公式、前n项和公式、性质。',do:'等比q=1要单独讨论，a_n=S_n-S_{n-1}注意n≥2。'},
+{id:'m-gh-5',level:'高中',module:'立体几何',title:'空间中的平行与垂直',prereq:['m-jh-5'],what:'线面、面面的平行与垂直关系。',why:'培养空间想象能力。',how:'判定定理和性质定理相互转化。',do:'证明面面垂直关键是找一个面内的垂线。'},
+{id:'m-gh-6',level:'高中',module:'概率统计',title:'概率与统计基础',prereq:['m-gh-4'],what:'概率描述可能性，统计推断总体。',why:'数据分析基础。',how:'古典概型、条件概率、独立事件、统计量。',do:'基本事件要等可能，独立与互斥区分清楚。'},
+{id:'m-dx-1',level:'大学',module:'微积分',title:'极限与连续',prereq:['m-gh-2'],what:'极限描述变化趋势，连续是图像不间断。',why:'微积分的基础。',how:'代入法、因式分解、重要极限、洛必达法则。',do:'0/0型优先因式分解或洛必达，等价无穷小慎用加减。'},
+{id:'m-dx-2',level:'大学',module:'微积分',title:'导数与微分',prereq:['m-dx-1'],what:'导数是瞬时变化率，微分是增量线性主部。',why:'优化问题的核心工具。',how:'基本公式、四则运算、链式法则、隐函数求导。',do:'复合函数从外到内逐层求，不要漏层。'},
+{id:'m-dx-3',level:'大学',module:'微积分',title:'不定积分与定积分',prereq:['m-dx-2'],what:'不定积分是导数逆运算，定积分是和式极限。',why:'几何物理广泛应用。',how:'换元积分法、分部积分法、牛顿-莱布尼茨公式。',do:'不定积分加C，分部积分选u按"反对幂指三"。'},
+{id:'m-dx-4',level:'大学',module:'线性代数',title:'矩阵与行列式',prereq:[],what:'矩阵是数表，行列式是方阵的数值属性。',why:'理工科基础工具。',how:'矩阵运算、逆矩阵、行列式性质与计算。',do:'矩阵乘法不满足交换律，逆矩阵存在条件是行列式不为0。'},
+{id:'m-dx-5',level:'大学',module:'线性代数',title:'线性方程组',prereq:['m-dx-4'],what:'Ax=b形式的方程组。',why:'大量实际问题的数学模型。',how:'秩判定解的情况，高斯消元法求解。',do:'先求秩再判断，自由变量个数=n-r(A)。'},
+{id:'m-dx-6',level:'大学',module:'概率论',title:'随机变量与分布',prereq:['m-gh-6'],what:'随机变量将试验结果数量化。',why:'统计推断的基础。',how:'离散型/连续型、常见分布、期望与方差。',do:'连续型单点概率为0，正态分布要标准化。'},
+{id:'m-dx-7',level:'大学',module:'微积分',title:'多元函数微积分',prereq:['m-dx-3'],what:'多元函数依赖多个自变量。',why:'物理场论和工程优化的基础。',how:'偏导数、全微分、二重积分、极坐标变换。',do:'偏导数把其他变量当常数，极坐标变换不要漏r。'}
+];
+const MATH_QUESTIONS=[
+{id:'mq1',level:'初中',module:'数与式',type:'choice',difficulty:1,q:'下列各数中，是负数的是？',options:['-(-3)','-|-3|','(-3)^2','-(-3)^3'],answer:1,explain:'-(-3)=3；-|-3|=-3；(-3)²=9；-(-3)³=27。选B。',hint:'先化简每个选项再判断'},
+{id:'mq2',level:'初中',module:'数与式',type:'choice',difficulty:1,q:'计算 $(-2)^3 + (-3) \\times (-2)$ 的结果是？',options:['-14','-2','2','14'],answer:1,explain:'(-2)³=-8，(-3)×(-2)=6，-8+6=-2。',hint:'先乘方再乘除最后加减'},
+{id:'mq3',level:'初中',module:'方程与不等式',type:'choice',difficulty:2,q:'解方程 $3(x-2) = x - 12$，其解为？',options:['x=-9','x=-3','x=3','x=9'],answer:1,explain:'去括号：3x-6=x-12，移项：2x=-6，x=-3。',hint:'先去括号再移项合并'},
+{id:'mq4',level:'初中',module:'方程与不等式',type:'choice',difficulty:2,q:'一元二次方程 $x^2 - 5x + 6 = 0$ 的两个根分别是？',options:['x₁=1, x₂=6','x₁=2, x₂=3','x₁=-2, x₂=-3','x₁=1, x₂=5'],answer:1,explain:'因式分解(x-2)(x-3)=0，x₁=2，x₂=3。',hint:'尝试因式分解'},
+{id:'mq5',level:'初中',module:'图形与几何',type:'choice',difficulty:2,q:'在△ABC中，AB=AC，∠A=40°，则∠B的度数是？',options:['40°','60°','70°','80°'],answer:2,explain:'等腰三角形∠B=∠C=(180°-40°)/2=70°。',hint:'等腰三角形两底角相等'},
+{id:'mq6',level:'初中',module:'数与式',type:'judge',difficulty:1,q:'任何有理数的绝对值都是正数。',answer:false,explain:'错误。0的绝对值是0，不是正数。'},
+{id:'mq7',level:'初中',module:'方程与不等式',type:'judge',difficulty:2,q:'一元二次方程判别式Δ=0时有两个相等的实数根。',answer:true,explain:'正确。Δ>0两不等根，Δ=0两等根，Δ<0无实根。'},
+{id:'mq8',level:'初中',module:'数与式',type:'fill',difficulty:1,q:'计算：$(-3) \\times (-4) = $ ____',answer:['12'],explain:'同号得正，3×4=12。'},
+{id:'mq9',level:'初中',module:'方程与不等式',type:'fill',difficulty:2,q:'方程 $2x + 5 = 11$ 的解是 $x = $ ____',answer:['3'],explain:'2x=6，x=3。'},
+{id:'mq10',level:'初中',module:'方程与不等式',type:'answer',difficulty:2,q:'某商品进价8元，售价10元时每天售200件。每涨价0.5元销量减10件。售价定为多少时利润最大？',answer:'设售价x元，利润y=(x-8)[200-20(x-10)]=(x-8)(400-20x)=-20x²+560x-3200。x=14时最大，最大利润720元。',keywords:['售价','利润','二次函数','最大','14','720'],explain:'建立利润关于售价的二次函数，求顶点。',hint:'设售价为x，用x表示每件利润和销售量'},
+{id:'mq11',level:'高中',module:'函数',type:'choice',difficulty:2,q:'函数 $f(x) = \\sqrt{x-1} + \\frac{1}{x-2}$ 的定义域是？',options:['[1, +∞)','[1, 2) ∪ (2, +∞)','(1, 2) ∪ (2, +∞)','[1, 2)'],answer:1,explain:'x-1≥0且x-2≠0，得[1,2)∪(2,+∞)。',hint:'根号下非负，分母不为0'},
+{id:'mq12',level:'高中',module:'函数',type:'choice',difficulty:2,q:'设f(x)是奇函数，x>0时f(x)=x²+1，则f(-2)=？',options:['-5','-3','3','5'],answer:0,explain:'f(2)=5，奇函数f(-2)=-f(2)=-5。',hint:'奇函数f(-x)=-f(x)'},
+{id:'mq13',level:'高中',module:'三角函数',type:'choice',difficulty:2,q:'函数 $y = 2\\sin(2x + \\frac{\\pi}{3})$ 的最小正周期是？',options:['$\\frac{\\pi}{2}$','$\\pi$','$2\\pi$','$4\\pi$'],answer:1,explain:'T=2π/|ω|=2π/2=π。',hint:'周期公式T=2π/|ω|'},
+{id:'mq14',level:'高中',module:'数列',type:'choice',difficulty:2,q:'等差数列a₁=2，d=3，则a₁₀=？',options:['27','29','30','32'],answer:1,explain:'a₁₀=2+(10-1)×3=29。',hint:'通项公式aₙ=a₁+(n-1)d'},
+{id:'mq15',level:'高中',module:'概率统计',type:'choice',difficulty:2,q:'从1,2,3,4,5中取两个不同数，和为偶数的概率是？',options:['$\\frac{1}{5}$','$\\frac{2}{5}$','$\\frac{3}{5}$','$\\frac{4}{5}$'],answer:1,explain:'C(5,2)=10种，同奇C(3,2)=3+同偶C(2,2)=1，共4种，概率4/10=2/5。',hint:'和为偶数需两数同奇偶'},
+{id:'mq16',level:'高中',module:'函数',type:'judge',difficulty:2,q:'$y=x^2$在R上是增函数。',answer:false,explain:'错误。在(-∞,0]递减，[0,+∞)递增。'},
+{id:'mq17',level:'高中',module:'立体几何',type:'judge',difficulty:2,q:'一条直线垂直于平面内两条直线则垂直于该平面。',answer:false,explain:'错误。必须是垂直于平面内两条相交直线。'},
+{id:'mq18',level:'高中',module:'三角函数',type:'fill',difficulty:2,q:'$\\sin \\frac{5\\pi}{6} = $ ____',answer:['1/2','0.5'],explain:'sin(5π/6)=sin(π-π/6)=sin(π/6)=1/2。'},
+{id:'mq19',level:'高中',module:'数列',type:'fill',difficulty:2,q:'等比数列a₁=1，q=2，前5项和S₅=____',answer:['31'],explain:'S₅=(1-2⁵)/(1-2)=31。'},
+{id:'mq20',level:'高中',module:'函数',type:'answer',difficulty:3,q:'已知f(x)=x²-2ax+3在[1,+∞)上递增，求a的范围。',answer:'开口向上，对称轴x=a，在[1,+∞)递增需a≤1。',keywords:['对称轴','开口向上','递增','a≤1'],explain:'二次函数单调性由对称轴决定。',hint:'先确定开口方向和对称轴'},
+{id:'mq21',level:'大学',module:'微积分',type:'choice',difficulty:2,q:'$\\lim_{x \\to 0} \\frac{\\sin 3x}{x} = $？',options:['1','3','$\\frac{1}{3}$','0'],answer:1,explain:'=3·lim sin3x/(3x)=3×1=3。',hint:'凑出sin(3x)/(3x)'},
+{id:'mq22',level:'大学',module:'微积分',type:'choice',difficulty:2,q:'设 $y = e^{x^2}$，则 $y\' = $？',options:['$e^{x^2}$','$2xe^{x^2}$','$x^2e^{x^2}$','$2e^{x^2}$'],answer:1,explain:'链式法则：y\'=e^(x²)·2x=2xe^(x²)。',hint:'复合函数求导，先外后内'},
+{id:'mq23',level:'大学',module:'线性代数',type:'choice',difficulty:2,q:'$A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$，则 $|A| = $？',options:['-2','2','-10','10'],answer:0,explain:'|A|=1×4-2×3=-2。',hint:'二阶行列式ad-bc'},
+{id:'mq24',level:'大学',module:'概率论',type:'choice',difficulty:2,q:'$X \\sim N(2, 4)$，则E(X)=？',options:['2','4','$\\sqrt{2}$','0'],answer:0,explain:'N(μ,σ²)中μ是期望，μ=2。',hint:'第一个参数是期望'},
+{id:'mq25',level:'大学',module:'微积分',type:'judge',difficulty:2,q:'可导必连续，连续不一定可导。',answer:true,explain:'正确。可导推出连续，反之不成立（如|x|在0点连续但不可导）。'},
+{id:'mq26',level:'大学',module:'线性代数',type:'judge',difficulty:2,q:'$(A+B)^2 = A^2 + 2AB + B^2$ 对任意方阵成立。',answer:false,explain:'错误。矩阵乘法不交换，(A+B)²=A²+AB+BA+B²。'},
+{id:'mq27',level:'大学',module:'微积分',type:'fill',difficulty:2,q:'$\\int 2x \\, dx = $ ____',answer:['x²+C','x^2+C'],explain:'∫2x dx=x²+C。'},
+{id:'mq28',level:'大学',module:'线性代数',type:'fill',difficulty:2,q:'$A = \\begin{pmatrix} 1 & 0 \\\\ 0 & 2 \\end{pmatrix}$，则 $A^{-1} = $ ____',answer:['[[1,0],[0,1/2]]'],explain:'对角矩阵逆矩阵对角元素取倒数。'},
+{id:'mq29',level:'大学',module:'微积分',type:'answer',difficulty:3,q:'求 $\\int_0^1 x e^x \\, dx$。',answer:'分部积分：u=x,dv=e^xdx，∫xe^x dx=xe^x-e^x+C。代入得[(x-1)e^x]₀¹=0-(-1)=1。',keywords:['分部积分','u=x','dv=e^x','上下限','1'],explain:'分部积分法。',hint:'选u=x，dv=e^x dx'},
+{id:'mq30',level:'大学',module:'概率论',type:'answer',difficulty:3,q:'X服从参数λ=2的泊松分布，求P(X=3)。',answer:'P(X=3)=2³e⁻²/3!=8e⁻²/6=4e⁻²/3≈0.1804。',keywords:['泊松分布','λ=2','k=3','4e⁻²/3','0.1804'],explain:'代入泊松分布公式。',hint:'泊松公式P(X=k)=λᵏe^(-λ)/k!'},
+{id:'mq31',level:'初中',module:'数与式',type:'choice',difficulty:2,q:'下列计算正确的是？',options:['$a^2 \\cdot a^3 = a^6$','$(a^2)^3 = a^5$','$a^6 \\div a^2 = a^4$','$(ab)^2 = ab^2$'],answer:2,explain:'A=a⁵，B=a⁶，C=a⁴正确，D=a²b²。',hint:'同底数幂相乘指数相加，相除指数相减'},
+{id:'mq32',level:'高中',module:'函数',type:'choice',difficulty:2,q:'$\\log_2 8 + \\log_2 4 = $？',options:['5','6','7','12'],answer:0,explain:'log₂8=3，log₂4=2，3+2=5。或log₂(8×4)=log₂32=5。',hint:'对数加法=真数相乘'},
+{id:'mq33',level:'大学',module:'微积分',type:'choice',difficulty:2,q:'$\\lim_{x \\to \\infty} (1 + \\frac{2}{x})^x = $？',options:['$e$','$e^2$','$\\sqrt{e}$','1'],answer:1,explain:'lim(1+a/x)^x=e^a，这里a=2，所以=e²。',hint:'第二个重要极限的推广形式'},
+{id:'mq34',level:'高中',module:'立体几何',type:'choice',difficulty:2,q:'正方体的棱长为2，则其体对角线长度为？',options:['$2\\sqrt{2}$','$2\\sqrt{3}$','4','6'],answer:1,explain:'体对角线=√(2²+2²+2²)=√12=2√3。',hint:'体对角线=√(a²+b²+c²)'},
+{id:'mq35',level:'初中',module:'图形与几何',type:'fill',difficulty:2,q:'相似三角形的相似比为2:3，则面积比为____',answer:['4:9','4/9'],explain:'面积比=相似比的平方=(2:3)²=4:9。'},
+{id:'mq36',level:'高中',module:'概率统计',type:'fill',difficulty:2,q:'数据2,4,6,8,10的方差是____',answer:['8'],explain:'平均数=6，方差=[(2-6)²+(4-6)²+(6-6)²+(8-6)²+(10-6)²]/5=(16+4+0+4+16)/5=8。'},
+{id:'mq37',level:'大学',module:'线性代数',type:'choice',difficulty:2,q:'设A为3阶方阵，|A|=2，则|2A|=？',options:['4','8','16','64'],answer:2,explain:'|kA|=kⁿ|A|，n=3，|2A|=2³×2=16。',hint:'数乘矩阵的行列式=kⁿ|A|'},
+{id:'mq38',level:'大学',module:'概率论',type:'choice',difficulty:2,q:'X~B(10,0.5)，则E(X)=？',options:['2','5','10','0.5'],answer:1,explain:'二项分布E(X)=np=10×0.5=5。',hint:'二项分布期望=np'},
+{id:'mq39',level:'高中',module:'数列',type:'answer',difficulty:3,q:'已知等差数列{aₙ}满足a₃=7，a₇=15，求a₁和d。',answer:'a₇-a₃=4d=8，d=2。a₃=a₁+2d=7，a₁=7-4=3。',keywords:['公差','d=2','a₁=3','等差数列'],explain:'用两项差求公差，再求首项。',hint:'a₇-a₃=4d'},
+{id:'mq40',level:'初中',module:'方程与不等式',type:'choice',difficulty:2,q:'用配方法解方程 $x^2 - 4x - 5 = 0$，配方后得到？',options:['$(x-2)^2=9$','$(x+2)^2=9$','$(x-2)^2=1$','$(x-4)^2=21$'],answer:0,explain:'x²-4x=5，x²-4x+4=9，(x-2)²=9。',hint:'两边加一次项系数一半的平方'}
+];
+
+/* ===== 数学变式题库（30模板，6维度） ===== */
+const MATH_VARIANTS=[
+/* 维度1：难度递进 */
+{id:'mv1',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'choice',dimension:'难度递进',template:'等差数列首项为{a1}，公差为{d}，则第{n}项为',params:{a1:{min:1,max:10},d:{min:1,max:5},n:{min:5,max:20}},answerFn:p=>p.a1+(p.n-1)*p.d,distractors:[p=>p.a1+p.n*p.d,p=>p.a1+(p.n-2)*p.d,p=>p.a1*p.n]},
+{id:'mv2',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'fill',dimension:'难度递进',template:'等差数列首项{a1}，公差{d}，前{n}项和Sₙ=',params:{a1:{min:1,max:5},d:{min:1,max:3},n:{min:4,max:12}},answerFn:p=>p.n*p.a1+p.n*(p.n-1)*p.d/2,distractors:[]},
+{id:'mv3',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'choice',dimension:'难度递进',template:'等比数列首项{a1}，公比{q}，则第{n}项为',params:{a1:{min:1,max:5},q:{min:2,max:4},n:{min:3,max:7}},answerFn:p=>p.a1*Math.pow(p.q,p.n-1),distractors:[p=>p.a1*Math.pow(p.q,p.n),p=>p.a1*p.q*p.n,p=>Math.pow(p.q,p.n-1)]},
+{id:'mv4',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'fill',dimension:'难度递进',template:'等比数列首项{a1}，公比{q}（q≠1），前{n}项和为',params:{a1:{min:1,max:3},q:{min:2,max:3},n:{min:3,max:6}},answerFn:p=>Math.round(p.a1*(1-Math.pow(p.q,p.n))/(1-p.q)),distractors:[]},
+{id:'mv5',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'answer',dimension:'难度递进',template:'等差数列{aₙ}中，a₃={a3}，a₇={a7}，求通项公式aₙ',params:{a3:{min:3,max:10},a7:{min:11,max:25}},answerFn:p=>{const d=(p.a7-p.a3)/4;const a1=p.a3-2*d;return 'aₙ='+a1+'+(n-1)×'+d+'='+(a1-d)+'+'+d+'n'},keywords:['等差数列','公差','通项','aₙ'],distractors:[]},
+/* 维度2：情境变换 */
+{id:'mv6',knowledgeId:'m-jh-3',level:'初中',module:'方程与不等式',type:'choice',dimension:'情境变换',template:'甲乙两车从相距{s}km的两地相向而行，甲速{v1}km/h，乙速{v2}km/h，几小时后相遇',params:{s:{min:120,max:300,step:30},v1:{min:40,max:70,step:10},v2:{min:50,max:80,step:10}},answerFn:p=>p.s/(p.v1+p.v2),distractors:[p=>p.s/(p.v1-p.v2),p=>p.s/p.v1,p=>p.s/p.v2]},
+{id:'mv7',knowledgeId:'m-jh-3',level:'初中',module:'方程与不等式',type:'fill',dimension:'情境变换',template:'一项工程，甲单独做{a}天完成，乙单独做{b}天完成，两人合作几天完成',params:{a:{min:6,max:15},b:{min:8,max:20}},answerFn:p=>Math.round(p.a*p.b/(p.a+p.b)*10)/10,distractors:[]},
+{id:'mv8',knowledgeId:'m-jh-4',level:'初中',module:'方程与不等式',type:'answer',dimension:'情境变换',template:'某商品进价{cost}元，标价{price}元，打几折销售才能保证利润率不低于{rate}%',params:{cost:{min:50,max:200,step:10},price:{min:100,max:400,step:10},rate:{min:10,max:30,step:5}},answerFn:p=>{const minPrice=p.cost*(1+p.rate/100);const discount=minPrice/p.price*10;return '至少打'+Math.ceil(discount*10)/10+'折'},keywords:['进价','标价','折扣','利润率'],distractors:[]},
+{id:'mv9',knowledgeId:'m-jh-3',level:'初中',module:'方程与不等式',type:'choice',dimension:'情境变换',template:'现有浓度{p1}%的盐水{m1}克，加入浓度{p2}%的盐水{m2}克，混合后浓度约为',params:{p1:{min:10,max:25,step:5},m1:{min:100,max:300,step:50},p2:{min:5,max:15,step:5},m2:{min:100,max:300,step:50}},answerFn:p=>Math.round((p.p1*p.m1+p.p2*p.m2)/(p.m1+p.m2)*10)/10,distractors:[p=>(p.p1+p.p2)/2,p=>p.p1*p.m1/(p.m1+p.m2),p=>p.p2]},
+{id:'mv10',knowledgeId:'m-gh-2',level:'高中',module:'函数',type:'fill',dimension:'情境变换',template:'某城市人口初始为{p}万，年增长率{r}%，{n}年后人口约为多少万（保留整数）',params:{p:{min:100,max:500,step:50},r:{min:1,max:5},n:{min:5,max:20,step:5}},answerFn:p=>Math.round(p.p*Math.pow(1+p.r/100,p.n)),distractors:[]},
+/* 维度3：已知未知互换 */
+{id:'mv11',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'choice',dimension:'已知未知互换',template:'等差数列首项{a1}，第{n}项为{an}，则公差d为',params:{a1:{min:1,max:5},n:{min:5,max:15},an:{min:20,max:60}},answerFn:p=>(p.an-p.a1)/(p.n-1),distractors:[p=>(p.an-p.a1)/p.n,p=>p.an-p.a1,p=>(p.an+p.a1)/(p.n-1)]},
+{id:'mv12',knowledgeId:'m-gh-4',level:'高中',module:'数列',type:'fill',dimension:'已知未知互换',template:'等比数列公比{q}，第{n}项为{an}，则首项a₁=',params:{q:{min:2,max:4},n:{min:3,max:6},an:{min:16,max:256}},answerFn:p=>p.an/Math.pow(p.q,p.n-1),distractors:[]},
+{id:'mv13',knowledgeId:'m-gh-1',level:'高中',module:'函数',type:'answer',dimension:'已知未知互换',template:'二次函数顶点为({h},{k})，且过点({x},{y})，求函数解析式',params:{h:{min:-3,max:3},k:{min:-5,max:5},x:{min:0,max:4},y:{min:1,max:10}},answerFn:p=>{const a=(p.y-p.k)/Math.pow(p.x-p.h,2);return 'f(x)='+a+'(x-'+p.h+')²+'+p.k},keywords:['二次函数','顶点','解析式','待定系数法'],distractors:[]},
+{id:'mv14',knowledgeId:'m-gh-2',level:'高中',module:'函数',type:'choice',dimension:'已知未知互换',template:'已知log_{base} N = {val}，则N =',params:{base:{min:2,max:5},val:{min:2,max:4}},answerFn:p=>Math.pow(p.base,p.val),distractors:[p=>p.base*p.val,p=>p.base+p.val,p=>Math.pow(p.val,p.base)]},
+{id:'mv15',knowledgeId:'m-gh-3',level:'高中',module:'三角函数',type:'fill',dimension:'已知未知互换',template:'已知cos α = {v}（α为锐角），则sin α =（保留两位小数）',params:{v:{min:0.3,max:0.8,step:0.1}},answerFn:p=>Math.sqrt(1-p.v*p.v).toFixed(2),distractors:[]},
+/* 维度4：条件增减 */
+{id:'mv16',knowledgeId:'m-jh-4',level:'初中',module:'方程与不等式',type:'choice',dimension:'条件增减',template:'关于x的方程x² - {b}x + {c} = 0有两个不相等实数根，则判别式Δ',params:{b:{min:4,max:10},c:{min:1,max:5}},answerFn:p=>p.b*p.b-4*p.c,distractors:[p=>p.b*p.b+4*p.c,p=>4*p.c-p.b*p.b,p=>p.b*p.b]},
+{id:'mv17',knowledgeId:'m-gh-1',level:'高中',module:'函数',type:'fill',dimension:'条件增减',template:'函数f(x)=√(x-{a}) + 1/(x-{b})的定义域用区间表示为（a<b）',params:{a:{min:1,max:3},b:{min:4,max:8}},answerFn:p=>'['+p.a+','+p.b+')∪('+p.b+',+∞)',distractors:[]},
+{id:'mv18',knowledgeId:'m-gh-6',level:'高中',module:'概率统计',type:'choice',dimension:'条件增减',template:'袋中有{red}个红球和{blue}个蓝球，不放回取两次，第二次取到红球的概率',params:{red:{min:2,max:6},blue:{min:2,max:6}},answerFn:p=>p.red/(p.red+p.blue),distractors:[p=>(p.red-1)/(p.red+p.blue-1),p=>p.red/(p.red+p.blue)*p.red/(p.red+p.blue),p=>p.blue/(p.red+p.blue)]},
+{id:'mv19',knowledgeId:'m-gh-5',level:'高中',module:'立体几何',type:'answer',dimension:'条件增减',template:'正方体棱长为{a}，求体对角线长度和表面积',params:{a:{min:2,max:6}},answerFn:p=>'体对角线='+p.a+'√3，表面积='+6*p.a*p.a,keywords:['正方体','体对角线','表面积','棱长'],distractors:[]},
+{id:'mv20',knowledgeId:'m-dx-1',level:'大学',module:'微积分',type:'choice',dimension:'条件增减',template:'lim(x→0) (sin {k}x)/(mx) =（m≠0）',params:{k:{min:2,max:6},m:{min:1,max:4}},answerFn:p=>p.k/p.m,distractors:[p=>p.m/p.k,p=>p.k*p.m,p=>1]},
+/* 维度5：过程组合 */
+{id:'mv21',knowledgeId:'m-dx-2',level:'大学',module:'微积分',type:'answer',dimension:'过程组合',template:'求函数f(x)=x³ - {a}x² + {b}x的单调区间和极值',params:{a:{min:3,max:7},b:{min:2,max:6}},answerFn:p=>{const disc=p.a*p.a-3*p.b;const x1=(p.a-Math.sqrt(disc))/3;const x2=(p.a+Math.sqrt(disc))/3;return '递增(-∞,'+x1.toFixed(2)+')∪('+x2.toFixed(2)+',+∞)，递减('+x1.toFixed(2)+','+x2.toFixed(2)+')'},keywords:['导数','单调区间','极值','驻点'],distractors:[]},
+{id:'mv22',knowledgeId:'m-dx-3',level:'大学',module:'微积分',type:'fill',dimension:'过程组合',template:'曲线y=x²与x轴、x={a}围成的面积为',params:{a:{min:1,max:5}},answerFn:p=>Math.pow(p.a,3)/3,distractors:[]},
+{id:'mv23',knowledgeId:'m-dx-5',level:'大学',module:'线性代数',type:'answer',dimension:'过程组合',template:'解方程组：x+y={s1}，2x+3y={s2}',params:{s1:{min:3,max:10},s2:{min:8,max:25}},answerFn:p=>{const x=3*p.s1-p.s2;const y=p.s2-2*p.s1;return 'x='+x+'，y='+y},keywords:['线性方程组','消元法','解','x,y'],distractors:[]},
+{id:'mv24',knowledgeId:'m-dx-6',level:'大学',module:'概率论',type:'fill',dimension:'过程组合',template:'X~B({n},{p})，则E(X)=，D(X)=（用逗号分隔）',params:{n:{min:5,max:20},p:{min:0.2,max:0.8,step:0.1}},answerFn:p=>(p.n*p.p)+','+(p.n*p.p*(1-p.p)),distractors:[]},
+{id:'mv25',knowledgeId:'m-gh-3',level:'高中',module:'三角函数',type:'answer',dimension:'过程组合',template:'化简：sin({a}°+{b}°)（用和角公式展开）',params:{a:{min:15,max:75,step:15},b:{min:15,max:75,step:15}},answerFn:p=>'sin'+p.a+'°cos'+p.b+'°+cos'+p.a+'°sin'+p.b+'°',keywords:['和角公式','正弦','展开','sin(A+B)'],distractors:[]},
+/* 维度6：知识点交叉 */
+{id:'mv26',knowledgeId:'m-gh-1',level:'高中',module:'函数',type:'answer',dimension:'知识点交叉',template:'已知f(x)={a}x+b是奇函数且过点({x},{y})，求a,b并判断单调性',params:{a:{min:1,max:4},x:{min:1,max:5},y:{min:2,max:10}},answerFn:p=>{const b=0;const aa=p.y/p.x;return 'a='+aa+'，b=0，在R上单调递增'},keywords:['奇函数','单调性','待定系数','函数性质'],distractors:[]},
+{id:'mv27',knowledgeId:'m-jh-5',level:'初中',module:'图形与几何',type:'choice',dimension:'知识点交叉',template:'直角三角形两直角边为{a}和{b}，则斜边上的高为',params:{a:{min:3,max:8},b:{min:4,max:10}},answerFn:p=>(p.a*p.b/Math.sqrt(p.a*p.a+p.b*p.b)).toFixed(2),distractors:[p=>Math.sqrt(p.a*p.a+p.b*p.b),p=>(p.a+p.b)/2,p=>p.a*p.b/(p.a+p.b)]},
+{id:'mv28',knowledgeId:'m-gh-6',level:'高中',module:'概率统计',type:'answer',dimension:'知识点交叉',template:'{n}个数据的平均数为{mean}，方差为{var}，若每个数据都加{a}，求新平均数和方差',params:{n:{min:5,max:20},mean:{min:5,max:15},var:{min:1,max:8},a:{min:1,max:5}},answerFn:p=>'新平均数='+(p.mean+p.a)+'，方差='+p.var+'（不变）',keywords:['平均数','方差','数据变换','性质'],distractors:[]},
+{id:'mv29',knowledgeId:'m-dx-4',level:'大学',module:'线性代数',type:'fill',dimension:'知识点交叉',template:'A为2阶方阵，|A|={det}，则|A²|=，|2A|=',params:{det:{min:-3,max:3}},answerFn:p=>(p.det*p.det)+','+(4*p.det),distractors:[]},
+{id:'mv30',knowledgeId:'m-dx-7',level:'大学',module:'微积分',type:'answer',dimension:'知识点交叉',template:'求函数f(x,y)=x²+{a}y²在点(1,1)处的偏导数f_x和f_y',params:{a:{min:1,max:5}},answerFn:p=>'f_x=2x=2，f_y='+(2*p.a)+'y='+(2*p.a),keywords:['偏导数','多元函数','求导','f_x,f_y'],distractors:[]}
+];
+
+const MATH_FORMULAS=[
+{id:'mf1',level:'初中',category:'代数',type:'fill',q:'平方差公式：$(a+b)(a-b)=$ ____',answer:'a²-b²',explain:'两数和与差的积等于平方差。'},
+{id:'mf2',level:'初中',category:'代数',type:'fill',q:'完全平方公式：$(a+b)^2=$ ____',answer:'a²+2ab+b²',explain:'注意中间项2ab。'},
+{id:'mf3',level:'初中',category:'方程',type:'fill',q:'一元二次方程求根公式：$x=$ ____',answer:'(-b±√(b²-4ac))/(2a)',explain:'判别式Δ=b²-4ac。'},
+{id:'mf4',level:'初中',category:'几何',type:'fill',q:'勾股定理：$a^2+b^2=$ ____',answer:'c²',explain:'直角三角形两直角边平方和等于斜边平方。'},
+{id:'mf5',level:'高中',category:'三角函数',type:'fill',q:'$\\sin^2\\alpha + \\cos^2\\alpha = $ ____',answer:'1',explain:'最基本的三角恒等式。'},
+{id:'mf6',level:'高中',category:'三角函数',type:'fill',q:'正弦定理：$\\frac{a}{\\sin A}=$ ____',answer:'2R',explain:'R为外接圆半径。'},
+{id:'mf7',level:'高中',category:'三角函数',type:'fill',q:'余弦定理：$c^2 = a^2 + b^2 - $ ____',answer:'2ab cosC',explain:'勾股定理的推广。'},
+{id:'mf8',level:'高中',category:'数列',type:'fill',q:'等差数列前n项和：$S_n = na_1 + $ ____',answer:'n(n-1)d/2',explain:'用首项和公差表示。'},
+{id:'mf9',level:'高中',category:'数列',type:'fill',q:'等比数列前n项和（q≠1）：$S_n = $ ____',answer:'a₁(1-qⁿ)/(1-q)',explain:'q=1时Sₙ=na₁。'},
+{id:'mf10',level:'高中',category:'导数',type:'fill',q:'$(x^n)\' = $ ____',answer:'nx^(n-1)',explain:'幂函数求导公式。'},
+{id:'mf11',level:'高中',category:'导数',type:'fill',q:'$(\\sin x)\' = $ ____',answer:'cos x',explain:'正弦导数是余弦。'},
+{id:'mf12',level:'高中',category:'不等式',type:'answer',q:'请叙述基本不等式。',answer:'对任意正实数a,b，(a+b)/2≥√(ab)，当且仅当a=b时等号成立。',keywords:['正实数','算术平均数','几何平均数','a=b','等号'],explain:'一正二定三相等。'},
+{id:'mf13',level:'大学',category:'微积分',type:'fill',q:'$\\lim_{x \\to 0} \\frac{\\sin x}{x} = $ ____',answer:'1',explain:'第一个重要极限。'},
+{id:'mf14',level:'大学',category:'微积分',type:'fill',q:'$\\lim_{x \\to \\infty} (1 + \\frac{1}{x})^x = $ ____',answer:'e',explain:'第二个重要极限，定义自然常数e。'},
+{id:'mf15',level:'大学',category:'微积分',type:'fill',q:'$\\int e^x dx = $ ____',answer:'e^x + C',explain:'e^x的积分等于自身。'},
+{id:'mf16',level:'大学',category:'微积分',type:'fill',q:'牛顿-莱布尼茨公式：$\\int_a^b f(x)dx = $ ____',answer:'F(b)-F(a)',explain:'微积分基本定理。'},
+{id:'mf17',level:'大学',category:'微积分',type:'fill',q:'分部积分公式：$\\int u \\, dv = $ ____',answer:'uv - ∫v du',explain:'选u按"反对幂指三"。'},
+{id:'mf18',level:'大学',category:'线性代数',type:'fill',q:'二阶行列式 $\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix} = $ ____',answer:'ad-bc',explain:'主对角线减副对角线。'},
+{id:'mf19',level:'大学',category:'线性代数',type:'answer',q:'请叙述矩阵可逆的充要条件。',answer:'n阶方阵A可逆⟺|A|≠0⟺r(A)=n⟺行(列)向量组线性无关⟺Ax=0只有零解。',keywords:['行列式','≠0','满秩','线性无关','只有零解'],explain:'多个等价条件。'},
+{id:'mf20',level:'大学',category:'概率论',type:'fill',q:'$X \\sim N(\\mu, \\sigma^2)$，则 $E(X) = $ ____',answer:'μ',explain:'第一个参数是期望。'},
+{id:'mf21',level:'大学',category:'概率论',type:'fill',q:'方差公式：$D(X) = E(X^2) - $ ____',answer:'[E(X)]²',explain:'比定义式更便于计算。'},
+{id:'mf22',level:'大学',category:'概率论',type:'answer',q:'请叙述全概率公式。',answer:'若B₁...Bₙ是样本空间的划分，则P(A)=ΣP(Bᵢ)P(A|Bᵢ)。',keywords:['划分','两两互斥','全集','P(A)','ΣP(Bᵢ)P(A|Bᵢ)'],explain:'将复杂事件分解。'},
+{id:'mf23',level:'大学',category:'微积分',type:'fill',q:'$(\\ln x)\' = $ ____',answer:'1/x',explain:'自然对数导数。'},
+{id:'mf24',level:'大学',category:'微积分',type:'fill',q:'$\\int \\frac{1}{x} dx = $ ____',answer:'ln|x| + C',explain:'注意绝对值。'},
+{id:'mf25',level:'大学',category:'微积分',type:'answer',q:'请叙述洛必达法则的使用条件。',answer:'0/0或∞/∞型，分子分母导数存在且分母导数不为0，lim f\'/g\'存在，则lim f/g=lim f\'/g\'。',keywords:['0/0','∞/∞','导数存在','g\'≠0','lim f\'/g\''],explain:'三个条件缺一不可。'},
+{id:'mf26',level:'大学',category:'线性代数',type:'fill',q:'A为m×n矩阵，B为n×p矩阵，则AB为____×____矩阵。',answer:['m×p','m,p'],explain:'前行乘后列。'},
+{id:'mf27',level:'大学',category:'概率论',type:'fill',q:'$X \\sim B(n,p)$，则 $E(X) = $ ____',answer:'np',explain:'二项分布期望。'}
+];
+
+/* ===== 物理模块 ===== */
+const PHYSICS_MODULE={id:'physics',name:'物理',type:'standard',icon:'⚛️',color:'#ff9500',desc:'初中到大学物理，力学电磁学光学热学',levels:['初中','高中','大学']};
+const PHYSICS_KNOWLEDGE=[
+{id:'p-jh-1',level:'初中',module:'力学',title:'运动与力',prereq:[],what:'力是物体对物体的作用，运动是物体位置的变化。',why:'力学是物理学的基础。',how:'速度v=s/t，牛顿第一定律（惯性），第二定律F=ma。',do:'受力分析是关键，先重力再弹力最后摩擦力。'},
+{id:'p-jh-2',level:'初中',module:'力学',title:'压强与浮力',prereq:['p-jh-1'],what:'压强是单位面积上的压力，浮力是液体对物体向上的力。',why:'流体力学基础。',how:'p=F/S，液体压强p=ρgh，阿基米德原理F浮=ρ液gV排。',do:'浮力题先判断物体状态（漂浮/悬浮/沉底）。'},
+{id:'p-jh-3',level:'初中',module:'电磁学',title:'电路基础',prereq:[],what:'电路是电流的通路，由电源、用电器、开关、导线组成。',why:'电学的入门。',how:'欧姆定律I=U/R，串联电流相等，并联电压相等。',do:'电路题先判断串并联，再画等效电路。'},
+{id:'p-gh-1',level:'高中',module:'力学',title:'牛顿运动定律',prereq:['p-jh-1'],what:'牛顿三定律描述力与运动的关系。',why:'经典力学的核心。',how:'F=ma，作用力与反作用力，惯性系。',do:'连接体问题用整体法和隔离法结合。'},
+{id:'p-gh-2',level:'高中',module:'力学',title:'机械能守恒',prereq:['p-gh-1'],what:'只有重力做功时机械能守恒。',why:'能量观点解决力学问题。',how:'E_k=½mv²，E_p=mgh，机械能=动能+势能。',do:'判断是否只有重力（或弹力）做功。'},
+{id:'p-gh-3',level:'高中',module:'电磁学',title:'电磁感应',prereq:['p-jh-3'],what:'闭合电路磁通量变化产生感应电流。',why:'电磁学的核心定律。',how:'法拉第电磁感应定律E=nΔΦ/Δt，楞次定律判断方向。',do:'感应电流方向用楞次定律"增反减同"。'},
+{id:'p-gh-4',level:'高中',module:'热学',title:'气体实验定律',prereq:[],what:'描述一定质量气体的状态变化规律。',why:'热学基础。',how:'玻意耳定律pV=C（等温），盖-吕萨克定律V/T=C（等压），查理定律p/T=C（等容）。',do:'理想气体状态方程pV/T=C。'},
+{id:'p-dx-1',level:'大学',module:'力学',title:'刚体力学',prereq:['p-gh-2'],what:'刚体是形状大小不变的物体。',why:'经典力学的进阶。',how:'转动定律M=Iα，角动量L=Iω，转动动能½Iω²。',do:'类比平动：力矩↔力，转动惯量↔质量，角加速度↔加速度。'}
+];
+const PHYSICS_QUESTIONS=[
+{id:'pq1',level:'初中',module:'力学',type:'choice',difficulty:1,q:'下列物体中，运动状态没有发生改变的是？',options:['匀速转弯的汽车','匀速直线下落的雨滴','加速起飞的飞机','减速进站的火车'],answer:1,explain:'运动状态不变指速度大小和方向都不变，匀速直线运动符合。',hint:'运动状态包括速度大小和方向'},
+{id:'pq2',level:'初中',module:'力学',type:'choice',difficulty:2,q:'重50N的物体放在水平地面上，受到10N的水平推力做匀速直线运动，则摩擦力为？',options:['0N','10N','40N','50N'],answer:1,explain:'匀速直线运动时受力平衡，水平方向推力=摩擦力=10N。',hint:'匀速运动时受力平衡'},
+{id:'pq3',level:'初中',module:'力学',type:'choice',difficulty:2,q:'将一木块放入水中，木块漂浮在水面上，此时木块受到的浮力与重力的关系是？',options:['浮力>重力','浮力=重力','浮力<重力','无法确定'],answer:1,explain:'漂浮时物体静止，受力平衡，浮力=重力。',hint:'漂浮和悬浮时浮力都等于重力'},
+{id:'pq4',level:'初中',module:'电磁学',type:'choice',difficulty:2,q:'两个电阻R₁=6Ω，R₂=3Ω串联，总电阻为？',options:['2Ω','3Ω','9Ω','18Ω'],answer:2,explain:'串联总电阻R=R₁+R₂=6+3=9Ω。',hint:'串联电阻相加'},
+{id:'pq5',level:'初中',module:'电磁学',type:'fill',difficulty:2,q:'一段导体两端电压为6V，通过的电流为0.5A，则导体电阻为____Ω',answer:['12'],explain:'R=U/I=6/0.5=12Ω。'},
+{id:'pq6',level:'高中',module:'力学',type:'choice',difficulty:2,q:'质量为2kg的物体受到10N的水平恒力，从静止开始运动，3秒末的速度为？',options:['5m/s','10m/s','15m/s','20m/s'],answer:2,explain:'a=F/m=10/2=5m/s²，v=at=5×3=15m/s。',hint:'先求加速度再求速度'},
+{id:'pq7',level:'高中',module:'力学',type:'choice',difficulty:2,q:'从高度h处自由下落的物体，落地时的速度为？（不计空气阻力）',options:['$\\sqrt{gh}$','$\\sqrt{2gh}$','$2gh$','$gh$'],answer:1,explain:'机械能守恒：mgh=½mv²，v=√(2gh)。',hint:'用机械能守恒或运动学公式'},
+{id:'pq8',level:'高中',module:'电磁学',type:'judge',difficulty:2,q:'只要闭合电路的一部分导体在磁场中运动，就一定产生感应电流。',answer:false,explain:'错误。必须是切割磁感线运动，即导体运动方向与磁感线不平行。'},
+{id:'pq9',level:'高中',module:'热学',type:'fill',difficulty:2,q:'一定质量的理想气体，温度不变时，压强增大则体积____（填"增大"或"减小"）',answer:['减小'],explain:'玻意耳定律pV=C，温度不变时p与V成反比。'},
+{id:'pq10',level:'大学',module:'力学',type:'choice',difficulty:3,q:'一转动惯量为2kg·m²的刚体，受到4N·m的恒力矩作用，角加速度为？',options:['1rad/s²','2rad/s²','4rad/s²','8rad/s²'],answer:1,explain:'转动定律M=Iα，α=M/I=4/2=2rad/s²。',hint:'类比F=ma，M=Iα'},
+{id:'pq11',level:'高中',module:'力学',type:'answer',difficulty:3,q:'质量m=1kg的物体在倾角30°的光滑斜面上从静止滑下，求2秒末的速度。（g=10m/s²）',answer:'沿斜面方向合力F=mg sin30°=1×10×0.5=5N，加速度a=F/m=5m/s²，v=at=5×2=10m/s。',keywords:['光滑斜面','合力','加速度','10m/s'],explain:'光滑斜面无摩擦，沿斜面方向只有重力分力。',hint:'先求沿斜面方向的合力'},
+{id:'pq12',level:'高中',module:'电磁学',type:'fill',difficulty:2,q:'闭合电路中磁通量在0.5s内从2Wb均匀增加到6Wb，线圈匝数为10，则感应电动势为____V',answer:['80'],explain:'E=nΔΦ/Δt=10×(6-2)/0.5=10×8=80V。'},
+{id:'pq13',level:'初中',module:'力学',type:'judge',difficulty:1,q:'物体不受力时一定保持静止状态。',answer:false,explain:'错误。不受力时保持静止或匀速直线运动状态（牛顿第一定律）。'},
+{id:'pq14',level:'大学',module:'力学',type:'choice',difficulty:2,q:'一质点做简谐运动，位移x=Acos(ωt)，则速度的最大值为？',options:['A','Aω','Aω²','ω'],answer:1,explain:'v=dx/dt=-Aωsin(ωt)，最大值为Aω。',hint:'速度是位移对时间的导数'},
+{id:'pq15',level:'高中',module:'热学',type:'choice',difficulty:2,q:'关于温度，下列说法正确的是？',options:['温度是分子平均动能的标志','0°C的冰比0°C的水冷','温度高的物体内能一定大','热量从内能大的物体传向内能小的物体'],answer:0,explain:'温度是分子平均动能的标志，A正确。0°C的冰和水温度相同，B错。内能还与质量、状态有关，C错。热量从温度高的传向温度低的，D错。',hint:'温度的微观含义'}
+];
+const PHYSICS_VARIANTS=[
+{id:'pv1',knowledgeId:'p-gh-1',level:'高中',module:'力学',type:'choice',dimension:'难度递进',template:'质量{m}kg的物体受{F}N水平恒力，从静止开始{t}秒末速度为',params:{m:{min:1,max:5},F:{min:5,max:20,step:5},t:{min:2,max:8}},answerFn:p=>p.F/p.m*p.t,distractors:[p=>p.F/p.m*(p.t-1),p=>p.F*p.t,p=>p.m*p.t]},
+{id:'pv2',knowledgeId:'p-gh-2',level:'高中',module:'力学',type:'fill',dimension:'难度递进',template:'从高度{h}m自由下落，落地速度为（g=10）',params:{h:{min:5,max:45,step:5}},answerFn:p=>Math.sqrt(2*10*p.h),distractors:[]},
+{id:'pv3',knowledgeId:'p-dx-1',level:'大学',module:'力学',type:'choice',dimension:'难度递进',template:'转动惯量{I}kg·m²的刚体受{M}N·m力矩，角加速度为',params:{I:{min:1,max:5},M:{min:2,max:10,step:2}},answerFn:p=>p.M/p.I,distractors:[p=>p.I/p.M,p=>p.M*p.I,p=>p.M+p.I]},
+{id:'pv4',knowledgeId:'p-jh-1',level:'初中',module:'力学',type:'choice',dimension:'情境变换',template:'汽车以{v}km/h速度行驶{s}km，需要几小时',params:{v:{min:40,max:100,step:10},s:{min:80,max:300,step:20}},answerFn:p=>p.s/p.v,distractors:[p=>p.v/p.s,p=>p.s*p.v,p=>p.s-p.v]},
+{id:'pv5',knowledgeId:'p-jh-2',level:'初中',module:'力学',type:'fill',dimension:'情境变换',template:'底面积{S}m²的物体重{G}N，对水平地面的压强为Pa',params:{S:{min:0.1,max:0.5,step:0.1},G:{min:10,max:50,step:10}},answerFn:p=>p.G/p.S,distractors:[]},
+{id:'pv6',knowledgeId:'p-jh-3',level:'初中',module:'电磁学',type:'choice',dimension:'情境变换',template:'{n}个相同电阻R串联，总电阻为',params:{n:{min:2,max:6},R:{min:2,max:10,step:2}},answerFn:p=>p.n*p.R,distractors:[p=>p.R/p.n,p=>p.R+p.n,p=>Math.pow(p.R,p.n)]},
+{id:'pv7',knowledgeId:'p-gh-1',level:'高中',module:'力学',type:'fill',dimension:'已知未知互换',template:'物体受{F}N力产生{a}m/s²加速度，质量为kg',params:{F:{min:5,max:30,step:5},a:{min:2,max:10}},answerFn:p=>p.F/p.a,distractors:[]},
+{id:'pv8',knowledgeId:'p-gh-3',level:'高中',module:'电磁学',type:'choice',dimension:'已知未知互换',template:'{n}匝线圈磁通量在{t}s内变化{phi}Wb，感应电动势为',params:{n:{min:5,max:20,step:5},t:{min:0.2,max:1,step:0.2},phi:{min:2,max:10,step:2}},answerFn:p=>p.n*p.phi/p.t,distractors:[p=>p.phi/p.t,p=>p.n*p.t/p.phi,p=>p.n*p.phi*p.t]},
+{id:'pv9',knowledgeId:'p-gh-4',level:'高中',module:'热学',type:'fill',dimension:'条件增减',template:'一定质量气体压强{p}atm，体积{V}L，温度不变，压强变为{p2}atm时体积为L',params:{p:{min:1,max:3},V:{min:2,max:10,step:2},p2:{min:2,max:5}},answerFn:p=>p.p*p.V/p.p2,distractors:[]},
+{id:'pv10',knowledgeId:'p-jh-2',level:'初中',module:'力学',type:'answer',dimension:'条件增减',template:'体积{V}m³的物体密度{rho}kg/m³，完全浸没在水中时浮力为（g=10，水密度1000）',params:{V:{min:0.001,max:0.01,step:0.001},rho:{min:500,max:2000,step:100}},answerFn:p=>'F浮=ρ水gV排=1000×10×'+p.V+'='+(10000*p.V)+'N',keywords:['阿基米德原理','浮力','浸没','ρ液gV排'],distractors:[]},
+{id:'pv11',knowledgeId:'p-gh-2',level:'高中',module:'力学',type:'answer',dimension:'过程组合',template:'质量{m}kg物体从{h}m高处自由下落，求落地时动能和重力势能减少量（g=10）',params:{m:{min:1,max:5},h:{min:5,max:20,step:5}},answerFn:p=>'动能=½mv²=mgh='+p.m*10*p.h+'J，势能减少='+p.m*10*p.h+'J',keywords:['机械能守恒','动能','重力势能','mgh'],distractors:[]},
+{id:'pv12',knowledgeId:'p-jh-3',level:'初中',module:'电磁学',type:'fill',dimension:'过程组合',template:'{r1}Ω和{r2}Ω并联，接{U}V电源，干路电流为A',params:{r1:{min:3,max:10},r2:{min:3,max:10},U:{min:3,max:12,step:3}},answerFn:p=>p.U/(p.r1*p.r2/(p.r1+p.r2)),distractors:[]},
+{id:'pv13',knowledgeId:'p-gh-1',level:'高中',module:'力学',type:'answer',dimension:'知识点交叉',template:'质量{m}kg物体在倾角{angle}°粗糙斜面上匀速下滑，求摩擦力和动摩擦因数（g=10）',params:{m:{min:1,max:5},angle:{min:20,max:45,step:5}},answerFn:p=>{const f=p.m*10*Math.sin(p.angle*Math.PI/180);const mu=Math.tan(p.angle*Math.PI/180);return '摩擦力='+f.toFixed(1)+'N，动摩擦因数='+mu.toFixed(2)},keywords:['匀速下滑','受力平衡','摩擦力','动摩擦因数'],distractors:[]},
+{id:'pv14',knowledgeId:'p-gh-3',level:'高中',module:'电磁学',type:'fill',dimension:'知识点交叉',template:'边长{a}m的正方形线圈在{B}T匀强磁场中以角速度{omega}rad/s转动，感应电动势最大值为V',params:{a:{min:0.1,max:0.5,step:0.1},B:{min:0.5,max:2,step:0.5},omega:{min:10,max:50,step:10}},answerFn:p=>p.B*p.a*p.a*p.omega,distractors:[]},
+{id:'pv15',knowledgeId:'p-dx-1',level:'大学',module:'力学',type:'answer',dimension:'知识点交叉',template:'质量{m}kg、半径{r}m的均匀圆盘绕中心轴转动，角速度{omega}rad/s，求转动动能（I=½mr²）',params:{m:{min:1,max:5},r:{min:0.1,max:0.5,step:0.1},omega:{min:5,max:20,step:5}},answerFn:p=>{const I=0.5*p.m*p.r*p.r;const K=0.5*I*p.omega*p.omega;return 'I=½mr²='+I.toFixed(3)+'，转动动能=½Iω²='+K.toFixed(3)+'J'},keywords:['转动惯量','转动动能','圆盘','½Iω²'],distractors:[]}
+];
+const PHYSICS_FORMULAS=[
+{id:'pf1',level:'初中',category:'力学',type:'fill',q:'速度公式：$v = $ ____',answer:'s/t',explain:'速度=路程/时间。'},
+{id:'pf2',level:'初中',category:'力学',type:'fill',q:'重力公式：$G = $ ____',answer:'mg',explain:'重力=质量×g，g≈9.8N/kg。'},
+{id:'pf3',level:'初中',category:'压强',type:'fill',q:'压强公式：$p = $ ____',answer:'F/S',explain:'压强=压力/受力面积。'},
+{id:'pf4',level:'初中',category:'压强',type:'fill',q:'液体压强：$p = $ ____',answer:'ρgh',explain:'ρ为液体密度，h为深度。'},
+{id:'pf5',level:'初中',category:'电学',type:'fill',q:'欧姆定律：$I = $ ____',answer:'U/R',explain:'电流=电压/电阻。'},
+{id:'pf6',level:'高中',category:'力学',type:'fill',q:'牛顿第二定律：$F = $ ____',answer:'ma',explain:'合力=质量×加速度。'},
+{id:'pf7',level:'高中',category:'力学',type:'fill',q:'动能公式：$E_k = $ ____',answer:'½mv²',explain:'动能=½×质量×速度²。'},
+{id:'pf8',level:'高中',category:'力学',type:'fill',q:'重力势能：$E_p = $ ____',answer:'mgh',explain:'重力势能=质量×g×高度。'},
+{id:'pf9',level:'高中',category:'电磁学',type:'fill',q:'法拉第电磁感应定律：$E = $ ____',answer:'nΔΦ/Δt',explain:'感应电动势=匝数×磁通量变化率。'},
+{id:'pf10',level:'大学',category:'力学',type:'fill',q:'转动定律：$M = $ ____',answer:'Iα',explain:'力矩=转动惯量×角加速度。'}
+];
+
+/* ===== 综测C模块（事业单位自然科学专技类C类） ===== */
+const ZONGCE_MODULE={id:'zongce_c',name:'综测C',type:'exam',icon:'📋',color:'#34c759',desc:'事业单位考试自然科学专技类C类',levels:['基础','强化','冲刺']};
+const ZONGCE_KNOWLEDGE=[
+{id:'z-1',level:'基础',module:'常识判断',title:'科技常识',prereq:[],what:'科技常识涵盖物理、化学、生物、地理、信息技术等基础知识。',why:'综测C类常识判断重点考查自然科学素养。',how:'关注最新科技进展，掌握基础科学原理，了解重要科技成就。',do:'做题时排除明显错误选项，利用已知知识推理未知。'},
+{id:'z-2',level:'基础',module:'言语理解',title:'阅读理解与表达',prereq:[],what:'言语理解考查对文字材料的理解、分析和表达能力。',why:'事业单位工作需要良好的文字理解和表达能力。',how:'主旨题找中心句，细节题定位原文，逻辑填空分析语境。',do:'先读问题再读材料，带着问题找答案，提高效率。'},
+{id:'z-3',level:'强化',module:'判断推理',title:'逻辑判断与推理',prereq:[],what:'判断推理包括图形推理、定义判断、类比推理、逻辑判断。',why:'考查逻辑思维和分析推理能力。',how:'图形推理看规律（位置、数量、样式），逻辑判断用推理规则。',do:'图形推理先看整体再看细节，逻辑判断画推理图辅助。'},
+{id:'z-4',level:'强化',module:'数量关系',title:'数学运算与策略',prereq:[],what:'数量关系考查数学运算能力和策略制定能力。',why:'C类特别注重数学运算和策略制定。',how:'掌握常见题型（工程、行程、利润、排列组合），学会代入排除。',do:'难题果断跳过，先做有把握的题，合理分配时间。'},
+{id:'z-5',level:'冲刺',module:'资料分析',title:'数据解读与分析',prereq:[],what:'资料分析考查对统计图表、文字数据的理解和计算能力。',why:'事业单位工作常需处理数据和报表。',how:'掌握增长率、比重、倍数等概念，学会速算技巧。',do:'先看材料结构再看问题，计算时注意单位和时间。'},
+{id:'z-6',level:'冲刺',module:'实验设计',title:'科学实验设计',prereq:[],what:'实验设计考查科学实验的设计、分析和评价能力。',why:'C类特色题型，考查自然科学研究能力。',how:'掌握实验设计原则（对照、重复、随机），学会分析实验变量。',do:'明确实验目的，找出自变量和因变量，判断实验设计是否合理。'}
+];
+const ZONGCE_QUESTIONS=[
+{id:'zq1',level:'基础',module:'常识判断',type:'choice',difficulty:1,q:'下列关于光的说法正确的是？',options:['光在真空中速度约为3×10⁸m/s','红光的频率比紫光高','光只能沿直线传播','光不能在水中传播'],answer:0,explain:'光在真空中速度约3×10⁸m/s，A正确。紫光频率比红光高，B错。光在不均匀介质中会弯曲，C错。光能在水中传播，D错。',hint:'光速是基本物理常数'},
+{id:'zq2',level:'基础',module:'常识判断',type:'choice',difficulty:1,q:'DNA的基本组成单位是？',options:['氨基酸','核苷酸','葡萄糖','脂肪酸'],answer:1,explain:'DNA（脱氧核糖核酸）的基本组成单位是脱氧核苷酸。氨基酸是蛋白质的基本单位，葡萄糖是糖类基本单位，脂肪酸是脂肪的组成成分。',hint:'DNA是核酸，基本单位是核苷酸'},
+{id:'zq3',level:'基础',module:'言语理解',type:'choice',difficulty:2,q:'科技创新是引领发展的第一动力。只有不断推进科技创新，才能在激烈的国际竞争中占据主动。这段文字意在强调？',options:['科技创新的重要性','国际竞争的激烈','发展的第一动力','科技改变生活'],answer:0,explain:'文段首句点明"科技创新是引领发展的第一动力"，第二句进一步说明科技创新对国际竞争的意义，整体强调科技创新的重要性。',hint:'找中心句和关键词'},
+{id:'zq4',level:'基础',module:'言语理解',type:'fill',difficulty:2,q:'科学家们通过反复实验，终于____了这一难题，取得了重大突破。（填入最恰当的词）',answer:['攻克','解决'],explain:'"攻克难题"是常见搭配，比"解决"更能体现难度和过程。'},
+{id:'zq5',level:'强化',module:'判断推理',type:'choice',difficulty:2,q:'所有金属都能导电，铜是金属，所以铜能导电。这一推理属于？',options:['归纳推理','演绎推理','类比推理','概率推理'],answer:1,explain:'从一般性前提（所有金属都能导电）推出特殊性结论（铜能导电），属于演绎推理中的三段论。',hint:'从一般到特殊是演绎'},
+{id:'zq6',level:'强化',module:'判断推理',type:'choice',difficulty:2,q:'医生:医院 相当于 教师:?',options:['课堂','学校','学生','课本'],answer:1,explain:'医生在医院工作，教师在学校工作，都是职业与工作场所的对应关系。课堂是教师工作的具体场所但不是机构名称。',hint:'职业:工作机构'},
+{id:'zq7',level:'强化',module:'数量关系',type:'choice',difficulty:2,q:'一项工程，甲单独做需要10天，乙单独做需要15天，两人合作需要几天完成？',options:['5天','6天','7天','8天'],answer:1,explain:'甲效率1/10，乙效率1/15，合作效率1/10+1/15=1/6，所以需要6天。',hint:'工程问题设总工作量为1'},
+{id:'zq8',level:'强化',module:'数量关系',type:'fill',difficulty:2,q:'某商品打八折后售价为160元，则原价为____元',answer:['200'],explain:'八折即原价的80%，原价=160÷0.8=200元。'},
+{id:'zq9',level:'冲刺',module:'资料分析',type:'choice',difficulty:2,q:'某市2023年GDP为5000亿元，2024年为5500亿元，则2024年GDP同比增长率为？',options:['5%','8%','10%','12%'],answer:2,explain:'增长率=(5500-5000)/5000×100%=500/5000×100%=10%。',hint:'增长率=(现期-基期)/基期'},
+{id:'zq10',level:'冲刺',module:'资料分析',type:'answer',difficulty:3,q:'某公司2024年营收1200万元，同比增长20%，成本800万元，同比增长10%。请计算2023年的利润和2024年的利润增长率。',answer:'2023年营收=1200/1.2=1000万，2023年成本=800/1.1≈727.3万，2023年利润=1000-727.3=272.7万。2024年利润=1200-800=400万。利润增长率=(400-272.7)/272.7≈46.7%。',keywords:['营收','成本','利润','增长率','同比'],explain:'先求基期值再算利润增长率。',hint:'同比增长要先还原基期值'},
+{id:'zq11',level:'冲刺',module:'实验设计',type:'choice',difficulty:2,q:'在"探究温度对酶活性的影响"实验中，自变量是？',options:['酶的浓度','温度','底物浓度','反应时间'],answer:1,explain:'实验目的是探究温度对酶活性的影响，所以温度是自变量，酶活性是因变量，其他为无关变量。',hint:'自变量是实验者主动改变的变量'},
+{id:'zq12',level:'冲刺',module:'实验设计',type:'judge',difficulty:2,q:'实验设计中，对照组的作用是排除无关变量对实验结果的干扰。',answer:true,explain:'正确。对照组与实验组只有自变量不同，其他条件完全相同，可以排除无关变量的干扰，增强实验结果的可信度。'},
+{id:'zq13',level:'基础',module:'常识判断',type:'judge',difficulty:1,q:'水的沸点在标准大气压下是100°C。',answer:true,explain:'正确。标准大气压（101.325kPa）下，水的沸点是100°C。气压降低沸点也降低。'},
+{id:'zq14',level:'基础',module:'常识判断',type:'fill',difficulty:1,q:'地球绕太阳公转一周的时间约为____天',answer:['365','365.25'],explain:'地球公转周期约365.25天，即一年。'},
+{id:'zq15',level:'强化',module:'判断推理',type:'fill',difficulty:2,q:'找规律填空：2, 6, 12, 20, 30, ____',answer:['42'],explain:'相邻差为4,6,8,10,12，所以下一个数=30+12=42。或n(n+1)，第6项=6×7=42。'},
+{id:'zq16',level:'强化',module:'数量关系',type:'choice',difficulty:2,q:'甲乙两人同时从A地出发去B地，甲速度6km/h，乙速度4km/h，甲到达B地后立即返回，在距B地3km处与乙相遇。AB两地距离为？',options:['12km','15km','18km','20km'],answer:1,explain:'设AB距离为x，相遇时甲走了x+3，乙走了x-3，时间相同：(x+3)/6=(x-3)/4，解得x=15km。',hint:'相遇时两人用时相同'},
+{id:'zq17',level:'冲刺',module:'资料分析',type:'choice',difficulty:2,q:'某班有50人，男生占60%，男生中喜欢数学的占50%，女生中喜欢数学的占40%。全班喜欢数学的有多少人？',options:['21人','23人','25人','27人'],answer:1,explain:'男生=50×60%=30人，男生喜欢数学=30×50%=15人。女生=20人，女生喜欢数学=20×40%=8人。合计=15+8=23人。',hint:'分步计算再求和'},
+{id:'zq18',level:'冲刺',module:'实验设计',type:'answer',difficulty:3,q:'设计一个实验验证"植物光合作用需要光"，请写出实验步骤和预期结果。',answer:'步骤：①取两盆生长状况相同的同种植物，编号A、B；②A放在光照充足处，B放在黑暗处，其他条件相同且适宜；③一段时间后，分别取叶片用酒精脱色后滴加碘液。预期结果：A组叶片变蓝（产生淀粉），B组叶片不变蓝（未产生淀粉）。结论：光合作用需要光。',keywords:['对照实验','光照','淀粉','碘液','变量控制'],explain:'对照实验，单一变量是光照。',hint:'设置对照组，控制单一变量'},
+{id:'zq19',level:'基础',module:'言语理解',type:'choice',difficulty:2,q:'下列句子中没有语病的一项是？',options:['通过这次实验，使我明白了科学的严谨性','能否坚持锻炼，是身体健康的重要保证','我们要养成认真观察、勤于思考的好习惯','大约有50人左右参加了这次活动'],answer:2,explain:'A项"通过...使..."导致主语缺失；B项两面对一面；D项"大约"和"左右"重复。C项没有语病。',hint:'常见病句类型：成分残缺、搭配不当、重复赘余'},
+{id:'zq20',level:'强化',module:'判断推理',type:'choice',difficulty:3,q:'某单位有员工100人，其中喜欢数学的有60人，喜欢物理的有50人，两科都不喜欢的有10人。问两科都喜欢的有多少人？',options:['10人','20人','30人','40人'],answer:1,explain:'至少喜欢一科的有100-10=90人。设两科都喜欢的有x人，则60+50-x=90，解得x=20人。',hint:'容斥原理：A∪B=A+B-A∩B'}
+];
+const ZONGCE_VARIANTS=[
+{id:'zv1',knowledgeId:'z-4',level:'强化',module:'数量关系',type:'choice',dimension:'难度递进',template:'一项工程甲单独{a}天完成，乙单独{b}天完成，两人合作几天完成',params:{a:{min:6,max:15},b:{min:8,max:20}},answerFn:p=>Math.round(p.a*p.b/(p.a+p.b)*10)/10,distractors:[p=>(p.a+p.b)/2,p=>p.a+p.b,p=>p.a*p.b]},
+{id:'zv2',knowledgeId:'z-4',level:'强化',module:'数量关系',type:'fill',dimension:'难度递进',template:'商品原价{price}元，打{discount}折后售价为元',params:{price:{min:100,max:500,step:50},discount:{min:5,max:9}},answerFn:p=>p.price*p.discount/10,distractors:[]},
+{id:'zv3',knowledgeId:'z-5',level:'冲刺',module:'资料分析',type:'choice',dimension:'难度递进',template:'某产品去年产量{a}万吨，今年比去年增长{r}%，今年产量为万吨',params:{a:{min:100,max:500,step:50},r:{min:5,max:25,step:5}},answerFn:p=>p.a*(1+p.r/100),distractors:[p=>p.a*p.r/100,p=>p.a+p.r,p=>p.a*(1-p.r/100)]},
+{id:'zv4',knowledgeId:'z-3',level:'强化',module:'判断推理',type:'fill',dimension:'难度递进',template:'找规律：{a1}, {a2}, {a3}, {a4}, ____（等差数列，公差{d}）',params:{a1:{min:1,max:10},d:{min:2,max:6}},answerFn:p=>p.a1+4*p.d,distractors:[]},
+{id:'zv5',knowledgeId:'z-1',level:'基础',module:'常识判断',type:'choice',dimension:'情境变换',template:'下列关于日常生活中的化学知识，说法正确的是',params:{},answerFn:()=>'铁在潮湿空气中容易生锈',distractors:[()=>'所有金属都能与酸反应',()=>'纯净水不含任何化学物质',()=>'温室气体只有二氧化碳']},
+{id:'zv6',knowledgeId:'z-2',level:'基础',module:'言语理解',type:'choice',dimension:'情境变换',template:'下列词语中，与"创新"意思最接近的是',params:{},answerFn:()=>'革新',distractors:[()=>'保守',()=>'传统',()=>'守旧']},
+{id:'zv7',knowledgeId:'z-4',level:'强化',module:'数量关系',type:'choice',dimension:'已知未知互换',template:'甲乙合作{c}天完成工程，甲单独{a}天完成，乙单独几天完成',params:{a:{min:6,max:12},c:{min:3,max:6}},answerFn:p=>1/(1/p.c-1/p.a),distractors:[p=>p.a-p.c,p=>p.a+p.c,p=>p.a*p.c]},
+{id:'zv8',knowledgeId:'z-5',level:'冲刺',module:'资料分析',type:'fill',dimension:'已知未知互换',template:'某产品今年产量{b}万吨，比去年增长{r}%，去年产量为万吨（保留一位小数）',params:{b:{min:110,max:600,step:10},r:{min:5,max:25,step:5}},answerFn:p=>Math.round(p.b/(1+p.r/100)*10)/10,distractors:[]},
+{id:'zv9',knowledgeId:'z-6',level:'冲刺',module:'实验设计',type:'answer',dimension:'条件增减',template:'设计实验验证"种子萌发需要水分"，写出实验步骤',params:{},answerFn:()=>'①取两个培养皿编号A、B，各放10粒相同种子；②A加适量水，B不加水，其他条件相同且适宜；③观察记录萌发情况。预期A萌发B不萌发。',keywords:['对照实验','水分','种子萌发','变量控制'],distractors:[]},
+{id:'zv10',knowledgeId:'z-3',level:'强化',module:'判断推理',type:'choice',dimension:'条件增减',template:'所有A都是B，所有B都是C，则',params:{},answerFn:()=>'所有A都是C',distractors:[()=>'所有C都是A',()=>'有些C不是A',()=>'所有A都不是C']},
+{id:'zv11',knowledgeId:'z-4',level:'强化',module:'数量关系',type:'answer',dimension:'过程组合',template:'甲乙两车从相距{s}km两地相向而行，甲速{v1}km/h，乙速{v2}km/h，几小时相遇？相遇时甲走了多远？',params:{s:{min:150,max:400,step:50},v1:{min:40,max:70,step:10},v2:{min:50,max:80,step:10}},answerFn:p=>{const t=p.s/(p.v1+p.v2);return t+'小时后相遇，甲走了'+(p.v1*t)+'km'},keywords:['相遇问题','路程','速度','时间'],distractors:[]},
+{id:'zv12',knowledgeId:'z-5',level:'冲刺',module:'资料分析',type:'answer',dimension:'过程组合',template:'某公司去年营收{a}万，今年增长{r1}%，成本{b}万，今年增长{r2}%。求今年利润和利润增长率',params:{a:{min:800,max:1500,step:100},r1:{min:10,max:30,step:5},b:{min:500,max:1000,step:100},r2:{min:5,max:20,step:5}},answerFn:p=>{const rev=p.a*(1+p.r1/100);const cost=p.b*(1+p.r2/100);const profit=rev-cost;const lastProfit=p.a-p.b;const growth=(profit-lastProfit)/lastProfit*100;return '今年利润='+profit.toFixed(0)+'万，利润增长率='+growth.toFixed(1)+'%'},keywords:['营收','成本','利润','增长率','同比'],distractors:[]},
+{id:'zv13',knowledgeId:'z-3',level:'强化',module:'判断推理',type:'answer',dimension:'知识点交叉',template:'某班{n}人，喜欢A的有{a}人，喜欢B的有{b}人，都不喜欢的有{c}人，求都喜欢的人数',params:{n:{min:40,max:80,step:10},a:{min:20,max:50,step:5},b:{min:20,max:50,step:5},c:{min:5,max:15}},answerFn:p=>{const atLeast=p.n-p.c;const both=p.a+p.b-atLeast;return both+'人'},keywords:['容斥原理','交集','并集','都喜欢'],distractors:[]},
+{id:'zv14',knowledgeId:'z-1',level:'基础',module:'常识判断',type:'judge',dimension:'知识点交叉',template:'光在真空中的传播速度约为3×10⁸m/s',params:{},answerFn:()=>true,distractors:[]},
+{id:'zv15',knowledgeId:'z-6',level:'冲刺',module:'实验设计',type:'choice',dimension:'知识点交叉',template:'在探究"电流与电压关系"的实验中，需要控制不变的量是',params:{},answerFn:()=>'电阻',distractors:[()=>'电压',()=>'电流',()=>'时间'],explain:'探究电流与电压关系时，根据控制变量法，应保持电阻不变，改变电压观察电流变化。'}
+];
+const ZONGCE_FORMULAS=[
+{id:'zf1',level:'基础',category:'数量关系',type:'fill',q:'工程问题：工作效率 = 1 ÷ ____',answer:'工作时间',explain:'设总工作量为1，效率=1/时间。'},
+{id:'zf2',level:'基础',category:'数量关系',type:'fill',q:'行程问题：路程 = 速度 × ____',answer:'时间',explain:'基本行程公式。'},
+{id:'zf3',level:'强化',category:'资料分析',type:'fill',q:'增长率 = (现期量 - 基期量) ÷ ____ × 100%',answer:'基期量',explain:'增长率公式，注意分母是基期量。'},
+{id:'zf4',level:'强化',category:'资料分析',type:'fill',q:'比重 = 部分量 ÷ ____ × 100%',answer:'整体量',explain:'比重公式。'},
+{id:'zf5',level:'强化',category:'判断推理',type:'answer',q:'请叙述容斥原理（两集合）。',answer:'A∪B = A + B - A∩B，即至少满足一个条件的数量等于两个集合数量之和减去交集数量。',keywords:['容斥','交集','并集','A∪B'],explain:'避免重复计算交集部分。'},
+{id:'zf6',level:'冲刺',category:'实验设计',type:'fill',q:'实验设计三原则：对照原则、重复原则、____原则',answer:'随机',explain:'科学实验设计的基本原则。'},
+{id:'zf7',level:'基础',category:'常识判断',type:'fill',q:'水的化学式是____',answer:'H₂O',explain:'水由两个氢原子和一个氧原子组成。'},
+{id:'zf8',level:'基础',category:'言语理解',type:'answer',q:'请简述主旨概括题的解题方法。',answer:'先找文段的中心句（通常在首尾或转折后），提取关键词，选择概括最全面、最准确的选项，避免选择片面或过度推断的选项。',keywords:['中心句','关键词','概括','全面准确'],explain:'主旨题要找核心观点。'},
+{id:'zf9',level:'强化',category:'数量关系',type:'fill',q:'利润 = 售价 - ____',answer:'成本',explain:'基本利润公式。利润率=利润/成本×100%。'},
+{id:'zf10',level:'冲刺',category:'资料分析',type:'fill',q:'倍数 = A ÷ ____',answer:'B',explain:'A是B的几倍，用A÷B。多几倍则是(A-B)÷B。'}
+];
+
+/* ===== 模块注册表 ===== */
+const MODULES={math:MATH_MODULE,physics:PHYSICS_MODULE,zongce_c:ZONGCE_MODULE};
+const MODULE_DATA={
+math:{knowledge:MATH_KNOWLEDGE,questions:MATH_QUESTIONS,formulas:MATH_FORMULAS,variants:MATH_VARIANTS},
+physics:{knowledge:PHYSICS_KNOWLEDGE,questions:PHYSICS_QUESTIONS,formulas:PHYSICS_FORMULAS,variants:PHYSICS_VARIANTS},
+zongce_c:{knowledge:ZONGCE_KNOWLEDGE,questions:ZONGCE_QUESTIONS,formulas:ZONGCE_FORMULAS,variants:ZONGCE_VARIANTS}
+};
+const Q_K_MAP_ALL={math:Q_K_MAP,
+physics:{pq1:'p-jh-1',pq2:'p-jh-1',pq3:'p-jh-2',pq4:'p-jh-3',pq5:'p-jh-3',pq6:'p-gh-1',pq7:'p-gh-2',pq8:'p-gh-3',pq9:'p-gh-4',pq10:'p-dx-1',pq11:'p-gh-1',pq12:'p-gh-3',pq13:'p-jh-1',pq14:'p-dx-1',pq15:'p-gh-4'},
+zongce_c:{zq1:'z-1',zq2:'z-1',zq3:'z-2',zq4:'z-2',zq5:'z-3',zq6:'z-3',zq7:'z-4',zq8:'z-4',zq9:'z-5',zq10:'z-5',zq11:'z-6',zq12:'z-6',zq13:'z-1',zq14:'z-1',zq15:'z-3',zq16:'z-4',zq17:'z-5',zq18:'z-6',zq19:'z-2',zq20:'z-3'}
+};
+function getCurrentModule(){return MODULES[State.currentModule]}
+function getCurrentData(){return MODULE_DATA[State.currentModule]}
+function getKnowledgeId(qid){const map=Q_K_MAP_ALL[State.currentModule]||{};return map[qid]||null}
+function switchModule(id){if(!MODULES[id]){showToast('模块不存在');return}State.currentModule=id;DB.set('currentModule',id);document.getElementById('currentModuleName').textContent=MODULES[id].name;const lv=MODULES[id].levels[0];State.knowledge.level=lv;State.quiz.level=lv;showToast('已切换到'+MODULES[id].name);renderHome();renderKnowledgeSidebar()}
+
+/* ===== 全局状态 ===== */
+const State={currentModule:DB.get('currentModule','math'),knowledge:{level:'初中',search:'',activeId:null,expandedGroups:{}},quiz:{phase:'setup',types:['choice','judge','fill','answer'],count:5,level:'高中',timerEnabled:false,timerMinutes:15,questions:[],current:0,answers:{},timerInterval:null,timeLeft:0,showHint:false},formula:{tab:'list',ftype:'fill',fcount:5,questions:[],current:0,answers:{},phase:'setup'},errors:{filter:'all'},onboarding:{step:0,total:4},bankReady:false};
+
+/* ===== 掌握度系统 ===== */
+const Mastery={get(kid){return DB.get('mastery_'+kid,0)},set(kid,val){DB.set('mastery_'+kid,Math.max(0,Math.min(100,val)))},update(kid,correct){if(!kid)return;let m=this.get(kid);m=correct?Math.min(100,m+8):Math.max(0,m-12);this.set(kid,m)},color(m){if(m>=70)return'var(--success)';if(m>=40)return'var(--warning)';if(m>0)return'var(--danger)';return'var(--border)'},label(m){if(m>=70)return'精通';if(m>=40)return'熟练';if(m>0)return'了解';return'未学'}};
+
+/* ===== 错题本 ===== */
+const ErrorBook={getAll(){return DB.get('errors',[])},save(l){DB.set('errors',l)},add(q,ua,mid){const list=this.getAll();const ex=list.find(e=>e.qid===q.id);if(ex){ex.errorCount++;ex.lastError=Date.now();ex.userAnswer=ua;ex.interval=1;ex.nextReview=Date.now()+86400000}else{list.push({id:'err_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),qid:q.id,module:mid,level:q.level,moduleName:q.module,type:q.type,q:q.q,options:q.options||null,answer:q.answer,explain:q.explain,userAnswer:ua,errorCount:1,firstError:Date.now(),lastError:Date.now(),interval:1,nextReview:Date.now()+86400000,reviewed:0})}this.save(list)},remove(qid){let l=this.getAll();l=l.filter(e=>e.qid!==qid);this.save(l)},reviewResult(qid,correct){const list=this.getAll();const e=list.find(x=>x.qid===qid);if(!e)return;e.reviewed++;if(correct){e.interval=Math.min(30,e.interval*2);e.nextReview=Date.now()+e.interval*86400000}else{e.interval=1;e.nextReview=Date.now()+86400000;e.errorCount++}this.save(list)},getDueReviews(){const now=Date.now();return this.getAll().filter(e=>e.nextReview<=now)},getModuleStats(){const list=this.getAll();const s={};list.forEach(e=>{const k=e.moduleName||e.module;if(!s[k])s[k]={count:0,errors:0};s[k].count++;s[k].errors+=e.errorCount});return Object.entries(s).map(([n,v])=>({name:n,count:v.count,errors:v.errors,rate:v.errors/Math.max(1,v.count)})).sort((a,b)=>b.errors-a.errors)},getHighRisk(){return this.getModuleStats().filter(s=>s.rate>1.5||s.count>=3)},getSimilar(e,n){const data=getCurrentData();const pool=data.questions.filter(q=>q.module===e.moduleName&&q.id!==e.qid);return shuffle(pool).slice(0,n)}};
+
+/* ===== 收藏夹 ===== */
+const Favorites={getAll(){return DB.get('favorites',[])},save(l){DB.set('favorites',l)},toggle(q){const list=this.getAll();const idx=list.findIndex(f=>f.qid===q.id);if(idx>=0){list.splice(idx,1);this.save(list);return false}else{list.push({qid:q.id,module:State.currentModule,level:q.level,moduleName:q.module,type:q.type,q:q.q,options:q.options||null,answer:q.answer,explain:q.explain,addDate:Date.now()});this.save(list);return true}},has(qid){return this.getAll().some(f=>f.qid===qid)},remove(qid){let l=this.getAll();l=l.filter(f=>f.qid!==qid);this.save(l)}};
+
+/* ===== 学习打卡 ===== */
+const Streak={get(){return DB.get('streak',{days:0,lastDate:null,totalDays:0})},check(){const s=this.get();const today=new Date().toDateString();if(s.lastDate===today)return s;if(s.lastDate){const last=new Date(s.lastDate);const now=new Date(today);const diff=Math.floor((now-last)/86400000);if(diff===1){s.days++}else if(diff>1){s.days=1}}else{s.days=1}s.lastDate=today;s.totalDays=(s.totalDays||0)+1;DB.set('streak',s);return s},render(){const s=this.get();const el=document.getElementById('streakBadge');if(s.days>0){el.innerHTML='🔥 连续学习 '+s.days+' 天';el.style.display='inline-flex'}else{el.style.display='none'}}};
+
+/* ===== 变式引擎 ===== */
+const VariantEngine={generate(t){const p={};for(const[k,c]of Object.entries(t.params||{})){const r=c.max-c.min;p[k]=c.min+Math.floor(Math.random()*(r/(c.step||1)+1))*(c.step||1)}let q=t.template;for(const[k,v]of Object.entries(p)){q=q.replace(new RegExp('\\{'+k+'\\}','g'),v)}const ans=typeof t.answerFn==='function'?t.answerFn(p):t.answer;const opts=t.distractors?[ans,...t.distractors.map(f=>f(p))].map(String):null;if(opts){const u=[...new Set(opts)];if(u.length<opts.length)return null}const shuffled=opts?shuffle(opts):null;let finalAnswer=ans;if(shuffled){const ansStr=String(ans);finalAnswer=shuffled.indexOf(ansStr);if(finalAnswer===-1)return null}return{id:'var_'+t.id+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),level:t.level||'高中',module:t.module||'变式',type:t.type,difficulty:2,q,options:shuffled,answer:finalAnswer,explain:'变式生成题（'+t.dimension+'），答案：'+ans,isVariant:true,knowledgeId:t.knowledgeId||''}},generateSafe(t,n=5){for(let i=0;i<n;i++){const q=this.generate(t);if(q)return q}return null},generateBatch(t,count){const results=[];const seen=new Set();let attempts=0;while(results.length<count&&attempts<count*10){const q=this.generate(t);if(q&&!seen.has(q.q)){seen.add(q.q);results.push(q)}attempts++}return results}};
+
+/* ===== 题库初始化（生成1万道变式题存入IndexedDB） ===== */
+const BankInitializer={targetCount:10000,async init(){const count=await QuestionBank.count();if(count>=this.targetCount){State.bankReady=true;document.getElementById('dbStatusText').textContent='题库已就绪（'+count+'题）';return}document.getElementById('dbStatusText').textContent='正在生成题库（'+count+'/'+this.targetCount+'）...';this.showProgress();const allVariants=[];for(const mid of Object.keys(MODULE_DATA)){const data=MODULE_DATA[mid];data.variants.forEach(v=>{allVariants.push({...v,moduleId:mid})})}const perVariant=Math.ceil(this.targetCount/allVariants.length);let generated=0;for(const vt of allVariants){if(generated>=this.targetCount)break;const batch=VariantEngine.generateBatch(vt,perVariant);batch.forEach(q=>{q.module=vt.moduleId;q.knowledgeId=vt.knowledgeId||''});QuestionBank.addBatch(batch);generated+=batch.length;const pct=Math.min(100,Math.round(generated/this.targetCount*100));document.getElementById('loadingBar').style.width=pct+'%';document.getElementById('dbStatusText').textContent='正在生成题库（'+generated+'/'+this.targetCount+'）...';await new Promise(r=>setTimeout(r,10))}document.getElementById('loadingBar').style.width='100%';setTimeout(()=>{document.getElementById('loadingBar').style.width='0%'},500);State.bankReady=true;const finalCount=await QuestionBank.count();document.getElementById('dbStatusText').textContent='题库已就绪（'+finalCount+'题）';showToast('题库生成完成，共'+finalCount+'道题')},showProgress(){document.getElementById('loadingBar').style.width='5%'}};
+
+/* ===== 智能组卷（从精选题+IndexedDB变式题混合组卷） ===== */
+const QuizEngine={async generate(cfg){const data=getCurrentData();let pool=data.questions.filter(q=>{if(cfg.level&&cfg.level!=='全部'&&q.level!==cfg.level)return false;if(cfg.types&&!cfg.types.includes(q.type))return false;return true});
+const varPool=await QuestionBank.query({module:State.currentModule,level:cfg.level!=='全部'?cfg.level:undefined,type:cfg.types});
+const errors=ErrorBook.getAll();const eids=new Set(errors.map(e=>e.qid));
+const weak=pool.filter(q=>eids.has(q.id));
+const normal=pool.filter(q=>!eids.has(q.id));
+let qs=[];const target=Math.min(cfg.count,pool.length+varPool.length);
+const wc=Math.min(Math.floor(target*0.3),weak.length);
+qs=qs.concat(shuffle(weak).slice(0,wc));
+const vc=Math.min(Math.floor(target*0.5),varPool.length);
+qs=qs.concat(shuffle(varPool).slice(0,vc));
+const nc=target-qs.length;
+qs=qs.concat(shuffle(normal).slice(0,nc));
+if(qs.length<target){qs=qs.concat(shuffle(varPool).slice(0,target-qs.length))}
+qs.sort((a,b)=>(a.difficulty||1)-(b.difficulty||1));
+return qs.slice(0,target)}};
+
+/* ===== 评分引擎 ===== */
+const ScoreEngine={score(q,ua){if(q.type==='choice'||q.type==='judge')return ua===q.answer?10:0;if(q.type==='fill'){const u=String(ua||'').trim().toLowerCase().replace(/\s+/g,'');const ans=Array.isArray(q.answer)?q.answer:[q.answer];return ans.some(a=>String(a).trim().toLowerCase().replace(/\s+/g,'')===u)?10:0}if(q.type==='answer'){if(!q.keywords||q.keywords.length===0)return 0;const u=String(ua||'').toLowerCase();let h=0;q.keywords.forEach(k=>{if(u.includes(k.toLowerCase()))h++});const r=h/q.keywords.length;if(r>=0.6)return 15;if(r>=0.4)return 7;return 0}return 0},calcTotal(qs,ans){let t=0,m=0;qs.forEach(q=>{const mx=q.type==='answer'?15:10;m+=mx;t+=this.score(q,ans[q.id])});return m>0?Math.round(t/m*100):0},getWrong(qs,ans){return qs.filter(q=>this.score(q,ans[q.id])<(q.type==='answer'?7:10))}};
+
+/* ===== 倒计时 ===== */
+const Timer={start(min,onEnd){State.quiz.timeLeft=min*60;State.quiz.timerInterval=setInterval(()=>{State.quiz.timeLeft--;const el=document.getElementById('quizTimerText');if(el){const m=Math.floor(State.quiz.timeLeft/60),s=State.quiz.timeLeft%60;el.textContent=m+':'+s.toString().padStart(2,'0')}const te=document.getElementById('quizTimer');if(te&&State.quiz.timeLeft<=60)te.classList.add('warning');if(State.quiz.timeLeft<=0){this.stop();if(onEnd)onEnd()}},1000)},stop(){if(State.quiz.timerInterval){clearInterval(State.quiz.timerInterval);State.quiz.timerInterval=null}}};
+
+/* ===== 新手引导 ===== */
+const ONBOARDING=[
+{icon:'📚',title:'欢迎使用学霸',text:'你的专属学习平台，涵盖知识目录、智能刷题、错题本、公式考察四大核心功能。万级题库离线可用。'},
+{icon:'📝',title:'每日一练',text:'选择题型、题量和范围，智能组卷，即时评分和详细解析。倒计时功能模拟真实考试。'},
+{icon:'📕',title:'错题本+间隔重复',text:'错题自动收录，按板块统计错误率。基于艾宾浩斯遗忘曲线自动安排复习，高效攻克薄弱点。'},
+{icon:'⚡',title:'更多功能',text:'公式考察夯实基础，题目收藏好题重做，学习打卡记录坚持，深色模式保护视力。添加到桌面像App一样使用！'}
+];
+function startOnboarding(){State.onboarding.step=0;document.getElementById('onboardingOverlay').classList.add('show');renderOnboarding()}
+function renderOnboarding(){const s=State.onboarding;const o=ONBOARDING[s.step];document.getElementById('obIcon').textContent=o.icon;document.getElementById('obTitle').textContent=o.title;document.getElementById('obText').textContent=o.text;document.getElementById('obDots').innerHTML=ONBOARDING.map((_,i)=>'<div class="ob-dot '+(i===s.step?'active':'')+'"></div>').join('');document.getElementById('obNext').textContent=s.step===ONBOARDING.length-1?'开始使用':'下一步';document.getElementById('obSkip').style.display=s.step===ONBOARDING.length-1?'none':'block'}
+function nextOnboarding(){if(State.onboarding.step<ONBOARDING.length-1){State.onboarding.step++;renderOnboarding()}else{finishOnboarding()}}
+function finishOnboarding(){document.getElementById('onboardingOverlay').classList.remove('show');DB.set('onboardingDone',true)}
+
+/* ===== 深色模式 ===== */
+function toggleDarkMode(){const isDark=document.body.classList.toggle('dark');document.getElementById('darkSwitch').classList.toggle('on',isDark);DB.set('darkMode',isDark);showToast(isDark?'已开启深色模式':'已关闭深色模式')}
+function initDarkMode(){if(DB.get('darkMode',false)){document.body.classList.add('dark');document.getElementById('darkSwitch').classList.add('on')}}
+
+/* ===== 快速刷题 & 真实模考 ===== */
+async function quickQuiz(){const data=getCurrentData();const qs=shuffle(data.questions).slice(0,1);State.quiz.questions=qs;State.quiz.current=0;State.quiz.answers={};State.quiz.phase='play';State.quiz.showHint=false;document.getElementById('quizSetupView').style.display='none';document.getElementById('quizPlayView').style.display='block';document.getElementById('quizResultView').style.display='none';document.getElementById('quizTimer').style.display='none';navigate('quiz');renderQuestion();showToast('快速刷题：1道题')}
+async function startMockExam(){const data=getCurrentData();const levels=getCurrentModule().levels;let qs=[];for(const lv of levels){const pool=data.questions.filter(q=>q.level===lv);qs=qs.concat(shuffle(pool).slice(0,3))}const varPool=await QuestionBank.query({module:State.currentModule});qs=qs.concat(shuffle(varPool).slice(0,1));qs=shuffle(qs).slice(0,10);if(qs.length<3){showToast('题目不足，无法模考');return}State.quiz.questions=qs;State.quiz.current=0;State.quiz.answers={};State.quiz.phase='play';State.quiz.showHint=false;document.getElementById('quizSetupView').style.display='none';document.getElementById('quizPlayView').style.display='block';document.getElementById('quizResultView').style.display='none';State.quiz.timerEnabled=true;document.getElementById('quizTimer').style.display='flex';Timer.start(20,()=>{showToast('模考时间到');submitQuiz()});navigate('quiz');renderQuestion();showToast('真实模考：10题，20分钟')}
+
+/* ===== 题目纠错 ===== */
+let feedbackQid=null;
+function openFeedback(qid){feedbackQid=qid;document.getElementById('feedbackText').value='';document.getElementById('feedbackModal').classList.add('show')}
+function submitFeedback(){const text=document.getElementById('feedbackText').value.trim();if(!text){showToast('请输入反馈内容');return}const fb=DB.get('feedbacks',[]);fb.push({qid:feedbackQid,module:State.currentModule,text,date:Date.now()});DB.set('feedbacks',fb);document.getElementById('feedbackModal').classList.remove('show');showToast('反馈已提交，感谢您的帮助！')}
+
+/* ===== 首页渲染 ===== */
+function renderHome(){Streak.check();Streak.render();const due=ErrorBook.getDueReviews();const rb=document.getElementById('reviewBanner');if(due>0){rb.innerHTML='<div><h3>📚 今日待复习 '+due.length+' 道错题</h3><p>基于艾宾浩斯遗忘曲线，现在是复习的最佳时机</p></div><button class="btn btn-primary" onclick="navigate(\'errors\')">立即复习</button>';rb.style.display='flex'}else{rb.style.display='none'}
+const features=[{icon:'📖',title:'知识目录',desc:'系统化知识点，四要素结构，全文检索',view:'knowledge',color:'#4f6ef7'},{icon:'📝',title:'每日一练',desc:'智能组卷，即时评分，详细解析',view:'quiz',color:'#34c759'},{icon:'📕',title:'错题本',desc:'自动收录，间隔重复，薄弱分析',view:'errors',color:'#ff3b30'},{icon:'📐',title:'公式考察',desc:'公式填空，定理简答，夯实基础',view:'formula',color:'#ff9500'}];
+document.getElementById('featureGrid').innerHTML=features.map(f=>'<div class="feature-card" onclick="navigate(\''+f.view+'\')"><div class="fc-icon" style="background:'+f.color+'15">'+f.icon+'</div><h3>'+f.title+'</h3><p>'+f.desc+'</p></div>').join('');
+const data=getCurrentData();const stats=DB.get('stats',{totalQuestions:0,totalSessions:0});
+QuestionBank.count().then(bc=>{
+document.getElementById('homeStats').innerHTML=[{num:data.knowledge.length,label:'知识点'},{num:data.questions.length+bc,label:'题库总量'},{num:data.formulas.length,label:'公式/技巧'},{num:ErrorBook.getAll().length,label:'错题数'},{num:stats.totalQuestions||0,label:'已做题'}].map(s=>'<div class="stat-card"><div class="stat-num">'+s.num+'</div><div class="stat-label">'+s.label+'</div></div>').join('')});}
+
+/* ===== 知识目录 ===== */
+function renderKnowledgeSidebar(){const mod=getCurrentModule();const data=getCurrentData();document.getElementById('knLevelTabs').innerHTML=mod.levels.map(lv=>'<button class="'+(State.knowledge.level===lv?'active':'')+'" onclick="setKNLevel(\''+lv+'\')">'+lv+'</button>').join('');
+const filtered=data.knowledge.filter(k=>k.level===State.knowledge.level&&(!State.knowledge.search||k.title.includes(State.knowledge.search)||k.what.includes(State.knowledge.search)));
+const groups={};filtered.forEach(k=>{if(!groups[k.module])groups[k.module]=[];groups[k.module].push(k)});
+let html='';for(const[gn,items]of Object.entries(groups)){const open=State.knowledge.expandedGroups[gn]!==false;html+='<div class="kn-group"><div class="kn-group-title" onclick="toggleKNGroup(\''+gn+'\')"><span>'+gn+'</span><span class="count">'+items.length+'</span></div><div class="kn-group-items '+(open?'open':'')+'">'+items.map(k=>{const m=Mastery.get(k.id);return '<div class="kn-item '+(State.knowledge.activeId===k.id?'active':'')+'" onclick="showKnowledge(\''+k.id+'\')"><span>'+k.title+'</span><span class="mastery-dot" style="background:'+Mastery.color(m)+'" title="'+Mastery.label(m)+'"></span></div>'}).join('')+'</div></div>'}
+if(html==='')html='<div class="empty-state" style="padding:20px"><p>暂无匹配的知识点</p></div>';document.getElementById('knGroupList').innerHTML=html}
+function setKNLevel(lv){State.knowledge.level=lv;State.knowledge.activeId=null;renderKnowledgeSidebar();document.getElementById('knDetail').innerHTML='<div class="empty-state"><p>从左侧选择一个知识点开始学习</p></div>'}
+function toggleKNGroup(n){State.knowledge.expandedGroups[n]=State.knowledge.expandedGroups[n]===false;renderKnowledgeSidebar()}
+function filterKnowledge(){State.knowledge.search=document.getElementById('knSearchInput').value;renderKnowledgeSidebar()}
+function showKnowledge(kid){const data=getCurrentData();const k=data.knowledge.find(x=>x.id===kid);if(!k)return;State.knowledge.activeId=kid;renderKnowledgeSidebar();const m=Mastery.get(kid);
+let prereqHtml='';if(k.prereq&&k.prereq.length>0){const names=k.prereq.map(pid=>{const pk=data.knowledge.find(x=>x.id===pid);return pk?'<a onclick="showKnowledge(\''+pid+'\')">'+pk.title+'</a>':pid}).join('、');prereqHtml='<div class="prereq-box"><span>📌 前置知识：</span>'+names+'</div>'}
+const sections=[{icon:'❓',label:'是什么',color:'#4f6ef7',content:k.what},{icon:'💡',label:'为什么',color:'#34c759',content:k.why},{icon:'🔧',label:'怎么用',color:'#ff9500',content:k.how},{icon:'📝',label:'怎么做',color:'#ff3b30',content:k.do}];
+document.getElementById('knDetail').innerHTML='<h2>'+k.title+'</h2><div class="kn-meta"><span class="tag tag-blue">'+k.level+'</span><span class="tag tag-gray">'+k.module+'</span><span class="tag" style="background:'+Mastery.color(m)+'20;color:'+Mastery.color(m)+'">掌握度 '+m+'% · '+Mastery.label(m)+'</span></div>'+prereqHtml+sections.map(s=>'<div class="kn-section"><h3><span class="sec-icon" style="background:'+s.color+'">'+s.icon+'</span>'+s.label+'</h3><p>'+s.content+'</p></div>').join('')+'<div style="margin-top:24px;text-align:center"><button class="btn btn-primary" onclick="navigate(\'quiz\')">做相关练习</button></div>';renderMath()}
+
+/* ===== 每日一练 ===== */
+function renderQuizSetup(){const types=[{id:'choice',icon:'🔘',label:'选择题'},{id:'judge',icon:'✅',label:'判断题'},{id:'fill',icon:'✏️',label:'填空题'},{id:'answer',icon:'📝',label:'解答题'}];
+document.getElementById('typeGrid').innerHTML=types.map(t=>'<div class="type-option '+(State.quiz.types.includes(t.id)?'selected':'')+'" onclick="toggleQType(\''+t.id+'\')"><div class="to-icon">'+t.icon+'</div><div class="to-label">'+t.label+'</div></div>').join('');
+const mod=getCurrentModule();document.getElementById('quizLevelTabs').innerHTML=['全部',...mod.levels].map(lv=>'<button class="'+(State.quiz.level===lv?'active':'')+'" onclick="State.quiz.level=\''+lv+'\';this.parentElement.querySelectorAll(\'button\').forEach(b=>b.classList.remove(\'active\'));this.classList.add(\'active\')">'+lv+'</button>').join('')}
+function toggleQType(id){const i=State.quiz.types.indexOf(id);if(i>=0){if(State.quiz.types.length>1)State.quiz.types.splice(i,1);else showToast('至少选择一种题型')}else State.quiz.types.push(id);renderQuizSetup()}
+function updateQCount(){State.quiz.count=parseInt(document.getElementById('qCountRange').value);document.getElementById('qCountVal').textContent=State.quiz.count}
+function toggleTimer(){State.quiz.timerEnabled=!State.quiz.timerEnabled;document.getElementById('timerSwitch').classList.toggle('on',State.quiz.timerEnabled);document.getElementById('timerInput').style.display=State.quiz.timerEnabled?'flex':'none'}
+async function startQuiz(){showToast('正在智能组卷...');const qs=await QuizEngine.generate(State.quiz);if(qs.length===0){showToast('当前条件下没有可用题目');return}if(qs.length<State.quiz.count)showToast('题库不足，实际生成'+qs.length+'题');
+State.quiz.questions=qs;State.quiz.current=0;State.quiz.answers={};State.quiz.phase='play';State.quiz.showHint=false;
+document.getElementById('quizSetupView').style.display='none';document.getElementById('quizPlayView').style.display='block';document.getElementById('quizResultView').style.display='none';
+if(State.quiz.timerEnabled){State.quiz.timerMinutes=parseInt(document.getElementById('timerMinutes').value)||15;document.getElementById('quizTimer').style.display='flex';Timer.start(State.quiz.timerMinutes,()=>{showToast('时间到，自动提交');submitQuiz()})}else{document.getElementById('quizTimer').style.display='none'}
+renderQuestion()}
+function renderQuestion(){const q=State.quiz.questions[State.quiz.current];const idx=State.quiz.current;const total=State.quiz.questions.length;
+document.getElementById('quizProgressFill').style.width=((idx+1)/total*100)+'%';document.getElementById('quizProgressText').textContent='第 '+(idx+1)+' / '+total+' 题';
+document.getElementById('prevBtn').style.visibility=idx===0?'hidden':'visible';document.getElementById('nextBtn').textContent=idx===total-1?'提交答卷':'下一题';
+document.getElementById('questionDots').innerHTML=State.quiz.questions.map((qq,i)=>'<div class="q-dot '+(State.quiz.answers[qq.id]!==undefined?'answered':'')+' '+(i===idx?'current':'')+'" onclick="goToQuestion('+i+')">'+(i+1)+'</div>').join('');
+const typeLabels={choice:'选择题',judge:'判断题',fill:'填空题',answer:'解答题'};
+let body='<div class="q-actions"><button class="q-action-btn '+(Favorites.has(q.id)?'active':'')+'" onclick="toggleFavCurrent()" title="收藏">'+(Favorites.has(q.id)?'⭐':'☆')+'</button><button class="q-action-btn" onclick="toggleHint()" title="提示">💡</button><button class="q-action-btn" onclick="openFeedback(\''+q.id+'\')" title="纠错">⚠️</button></div>';
+body+='<div class="q-num"><span class="tag tag-blue">'+(typeLabels[q.type]||q.type)+'</span> '+q.level+' · '+(q.module||'')+'</div>';
+if(State.quiz.showHint&&q.hint){body+='<div class="hint-box">💡 解题提示：'+q.hint+'</div>'}
+body+='<div class="q-text">'+q.q+'</div>';
+if(q.type==='choice'&&q.options){const labels=['A','B','C','D'];body+='<div class="options-list">'+q.options.map((opt,i)=>'<div class="option-item '+(State.quiz.answers[q.id]===i?'selected':'')+'" onclick="selectOption('+i+')"><div class="opt-label">'+labels[i]+'</div><div class="opt-text">'+opt+'</div></div>').join('')+'</div>'}
+else if(q.type==='judge'){body+='<div class="options-list"><div class="option-item '+(State.quiz.answers[q.id]===true?'selected':'')+'" onclick="selectJudge(true)"><div class="opt-label">✓</div><div class="opt-text">正确</div></div><div class="option-item '+(State.quiz.answers[q.id]===false?'selected':'')+'" onclick="selectJudge(false)"><div class="opt-label">✗</div><div class="opt-text">错误</div></div></div>'}
+else if(q.type==='fill'){body+='<input class="fill-input" id="fillAnswer" placeholder="请输入答案" value="'+(State.quiz.answers[q.id]||'')+'" oninput="State.quiz.answers[\''+q.id+'\']=this.value">'}
+else if(q.type==='answer'){body+='<textarea class="textarea-input" id="answerInput" placeholder="请输入解答过程..." oninput="State.quiz.answers[\''+q.id+'\']=this.value">'+(State.quiz.answers[q.id]||'')+'</textarea>'}
+document.getElementById('questionCard').innerHTML=body;renderMath()}
+function toggleFavCurrent(){const q=State.quiz.questions[State.quiz.current];const added=Favorites.toggle(q);showToast(added?'已收藏':'已取消收藏');renderQuestion()}
+function toggleHint(){State.quiz.showHint=!State.quiz.showHint;renderQuestion()}
+function selectOption(i){const q=State.quiz.questions[State.quiz.current];State.quiz.answers[q.id]=i;renderQuestion()}
+function selectJudge(v){const q=State.quiz.questions[State.quiz.current];State.quiz.answers[q.id]=v;renderQuestion()}
+function goToQuestion(i){State.quiz.current=i;State.quiz.showHint=false;renderQuestion()}
+function prevQuestion(){if(State.quiz.current>0){State.quiz.current--;State.quiz.showHint=false;renderQuestion()}}
+function nextQuestion(){if(State.quiz.current<State.quiz.questions.length-1){State.quiz.current++;State.quiz.showHint=false;renderQuestion()}else{const un=State.quiz.questions.filter(q=>State.quiz.answers[q.id]===undefined).length;if(un>0){if(!confirm('还有'+un+'道题未作答，确定提交吗？'))return}submitQuiz()}}
+function submitQuiz(){Timer.stop();const qs=State.quiz.questions;const ans=State.quiz.answers;const score=ScoreEngine.calcTotal(qs,ans);const wrong=ScoreEngine.getWrong(qs,ans);
+wrong.forEach(q=>{const ua=q.type==='choice'?(q.options?q.options[ans[q.id]]:''):(ans[q.id]===undefined?'未作答':String(ans[q.id]));ErrorBook.add(q,ua,State.currentModule);Mastery.update(getKnowledgeId(q.id)||q.knowledgeId,false)});
+qs.forEach(q=>{if(!wrong.includes(q))Mastery.update(getKnowledgeId(q.id)||q.knowledgeId,true)});
+const stats=DB.get('stats',{totalQuestions:0,totalSessions:0});stats.totalQuestions+=qs.length;stats.totalSessions++;DB.set('stats',stats);
+State.quiz.phase='result';document.getElementById('quizPlayView').style.display='none';document.getElementById('quizResultView').style.display='block';
+const correct=qs.length-wrong.length;const sc=score>=80?'var(--success)':score>=60?'var(--warning)':'var(--danger)';const C=2*Math.PI*80;const off=C*(1-score/100);
+let wh='';if(wrong.length>0){wh='<div class="wrong-list"><h3>错题解析（'+wrong.length+'道）</h3>';wrong.forEach((q,i)=>{const ua=q.type==='choice'?(q.options?q.options[ans[q.id]]:'未选'):(ans[q.id]===undefined?'未作答':String(ans[q.id]));const ca=q.type==='choice'?(q.options?q.options[q.answer]:''):(q.type==='judge'?(q.answer?'正确':'错误'):String(q.answer));wh+='<div class="wrong-item"><div class="wi-header"><span class="tag tag-red">错题 '+(i+1)+'</span><span class="tag tag-gray">'+q.level+' · '+(q.module||'')+'</span></div><div class="wi-q">'+q.q+'</div><div class="wi-answers"><div class="wi-answer wi-user">你的答案：'+escHtml(String(ua))+'</div><div class="wi-answer wi-correct">正确答案：'+escHtml(String(ca))+'</div></div><div class="wi-explain"><strong>解析：</strong>'+(q.explain||'暂无解析')+'</div></div>'});wh+='</div>'}else{wh='<div style="text-align:center;padding:40px;color:var(--success)"><div style="font-size:3rem;margin-bottom:12px">🎉</div><p style="font-size:1.1rem;font-weight:700">全部正确！太棒了！</p></div>'}
+document.getElementById('quizResultContent').innerHTML='<div class="score-ring"><svg width="180" height="180"><circle cx="90" cy="90" r="80" fill="none" stroke="var(--border)" stroke-width="12"/><circle cx="90" cy="90" r="80" fill="none" stroke="'+sc+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+off+'" style="transition:stroke-dashoffset 1s ease"/></svg><div class="score-text"><div class="score-num" style="color:'+sc+'">'+score+'</div><div class="score-label">分</div></div></div><div class="result-stats"><div class="result-stat"><div class="rs-num" style="color:var(--success)">'+correct+'</div><div class="rs-label">正确</div></div><div class="result-stat"><div class="rs-num" style="color:var(--danger)">'+wrong.length+'</div><div class="rs-label">错误</div></div><div class="result-stat"><div class="rs-num">'+qs.length+'</div><div class="rs-label">总题数</div></div></div>'+wh+'<div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap"><button class="btn btn-primary" onclick="restartQuiz()">再来一组</button><button class="btn btn-secondary" onclick="navigate(\'errors\')">查看错题本</button><button class="btn btn-secondary" onclick="navigate(\'home\')">返回首页</button></div>';
+renderMath()}
+function restartQuiz(){State.quiz.phase='setup';document.getElementById('quizSetupView').style.display='block';document.getElementById('quizPlayView').style.display='none';document.getElementById('quizResultView').style.display='none';renderQuizSetup()}
+
+/* ===== 错题本渲染 ===== */
+function renderErrors(){const errors=ErrorBook.getAll();
+const totalErr=errors.length;const totalCount=errors.reduce((s,e)=>s+e.errorCount,0);const mods=new Set(errors.map(e=>e.moduleName||e.module)).size;const hr=ErrorBook.getHighRisk();
+document.getElementById('errorOverview').innerHTML=[{num:totalErr,label:'错题总数',color:'var(--accent)'},{num:totalCount,label:'累计错误次数',color:'var(--danger)'},{num:mods,label:'涉及板块',color:'var(--warning)'},{num:hr.length,label:'高风险板块',color:'var(--danger)'}].map(s=>'<div class="error-stat"><div class="es-num" style="color:'+s.color+'">'+s.num+'</div><div class="es-label">'+s.label+'</div></div>').join('');
+const hra=document.getElementById('highRiskAlert');if(hr.length>0){hra.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><p><strong>高风险板块提醒：</strong>'+hr.map(h=>h.name).join('、')+' 错误率较高，建议重点复习</p>';hra.style.display='flex'}else{hra.style.display='none'}
+const stats=ErrorBook.getModuleStats();const maxE=Math.max(...stats.map(s=>s.errors),1);
+document.getElementById('rateBars').innerHTML=stats.length>0?stats.map(s=>{const pct=(s.errors/maxE*100);const c=s.rate>1.5?'var(--danger)':s.rate>1?'var(--warning)':'var(--accent)';return '<div class="rate-bar"><div class="rb-label">'+s.name+'</div><div class="rb-track"><div class="rb-fill" style="width:'+pct+'%;background:'+c+'"></div></div><div class="rb-count">'+s.count+'题/'+s.errors+'次</div></div>'}).join(''):'<div class="empty-state"><p>暂无错题数据</p></div>';
+const allMods=[...new Set(errors.map(e=>e.moduleName||e.module))];
+document.getElementById('errorFilters').innerHTML=['全部',...allMods].map(m=>'<button class="'+(State.errors.filter===m?'active':'')+'" onclick="State.errors.filter=\''+m+'\';renderErrors()">'+m+'</button>').join('');
+let filtered=errors;if(State.errors.filter!=='all')filtered=errors.filter(e=>(e.moduleName||e.module)===State.errors.filter);
+document.getElementById('errorList').innerHTML=filtered.length>0?filtered.map(e=>'<div class="error-card" onclick="showErrorDetail(\''+e.id+'\')"><div class="ec-header"><span class="tag '+(e.errorCount>=3?'tag-red':e.errorCount>=2?'tag-orange':'tag-blue')+'">错'+e.errorCount+'次</span><span class="tag tag-gray">'+e.level+' · '+(e.moduleName||e.module)+'</span></div><div class="ec-q">'+e.q+'</div><div class="ec-meta"><span>最近出错：'+new Date(e.lastError).toLocaleDateString()+'</span><span>下次复习：'+new Date(e.nextReview).toLocaleDateString()+'</span></div></div>').join(''):'<div class="empty-state"><p>暂无错题，继续保持！</p></div>'}
+function showErrorDetail(eid){const e=ErrorBook.getAll().find(x=>x.id===eid);if(!e)return;const ca=e.type==='choice'?(e.options?e.options[e.answer]:''):(e.type==='judge'?(e.answer?'正确':'错误'):String(e.answer));
+document.getElementById('errorDetailContent').innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="font-size:1.2rem;font-weight:700">错题详情</h3><button class="btn-icon" onclick="document.getElementById(\'errorDetailModal\').classList.remove(\'show\')">✕</button></div><div style="margin-bottom:12px"><span class="tag tag-red">错'+e.errorCount+'次</span> <span class="tag tag-gray">'+e.level+' · '+(e.moduleName||e.module)+'</span></div><div style="font-size:1rem;line-height:1.8;margin-bottom:16px">'+e.q+'</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px"><div class="wi-answer wi-user">你的答案：'+escHtml(String(e.userAnswer))+'</div><div class="wi-answer wi-correct">正确答案：'+escHtml(String(ca))+'</div></div><div class="wi-explain" style="margin-bottom:16px"><strong>解析：</strong>'+(e.explain||'暂无解析')+'</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-primary" onclick="practiceSimilar(\''+e.id+'\')">同类型强化（5题）</button><button class="btn btn-secondary" onclick="removeError(\''+e.qid+'\')">移出错题本</button></div>';
+document.getElementById('errorDetailModal').classList.add('show');renderMath()}
+async function practiceSimilar(eid){const e=ErrorBook.getAll().find(x=>x.id===eid);if(!e)return;const similar=ErrorBook.getSimilar(e,5);if(similar.length===0){const varPool=await QuestionBank.query({module:State.currentModule});const sv=shuffle(varPool).slice(0,5);if(sv.length===0){showToast('暂无同类型题目');return}State.quiz.questions=sv}else{State.quiz.questions=similar}
+document.getElementById('errorDetailModal').classList.remove('show');State.quiz.current=0;State.quiz.answers={};State.quiz.phase='play';State.quiz.showHint=false;
+document.getElementById('quizSetupView').style.display='none';document.getElementById('quizPlayView').style.display='block';document.getElementById('quizResultView').style.display='none';document.getElementById('quizTimer').style.display='none';navigate('quiz');renderQuestion();showToast('开始同类型强化训练')}
+function removeError(qid){ErrorBook.remove(qid);document.getElementById('errorDetailModal').classList.remove('show');showToast('已移出错题本');renderErrors();renderHome()}
+
+/* ===== 公式考察 ===== */
+function renderFormulaList(){const data=getCurrentData();document.getElementById('formulaList').innerHTML=data.formulas.map(f=>'<div class="formula-card"><div class="fc-category">'+f.level+' · '+f.category+'</div><div class="fc-name">'+(f.q.length>40?f.q.slice(0,40)+'...':f.q)+'</div><div class="fc-formula">'+(f.type==='fill'?f.answer:String(f.answer).slice(0,60)+'...')+'</div><div class="fc-desc">'+(f.explain||'').slice(0,80)+'...</div></div>').join('');renderMath()}
+function switchFormulaTab(tab,btn){State.formula.tab=tab;btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('formulaListView').style.display=tab==='list'?'block':'none';document.getElementById('formulaQuizView').style.display=tab==='quiz'?'block':'none';if(tab==='list')renderFormulaList()}
+function selectFType(el){el.parentElement.querySelectorAll('.type-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');State.formula.ftype=el.dataset.ftype}
+function startFormulaQuiz(){const data=getCurrentData();const pool=data.formulas.filter(f=>f.type===State.formula.ftype);const qs=shuffle(pool).slice(0,Math.min(State.formula.fcount,pool.length));if(qs.length===0){showToast('该类型题目不足');return}
+State.formula.questions=qs;State.formula.current=0;State.formula.answers={};State.formula.phase='play';
+document.getElementById('formulaQuizSetup').style.display='none';document.getElementById('formulaQuizPlay').style.display='block';renderFormulaQuestion()}
+function renderFormulaQuestion(){const f=State.formula.questions[State.formula.current];const idx=State.formula.current;const total=State.formula.questions.length;
+const input=f.type==='fill'?'<input class="fill-input" id="fFillAnswer" placeholder="请输入答案" value="'+(State.formula.answers[f.id]||'')+'" oninput="State.formula.answers[\''+f.id+'\']=this.value">':'<textarea class="textarea-input" id="fAnswerInput" placeholder="请输入回答..." oninput="State.formula.answers[\''+f.id+'\']=this.value">'+(State.formula.answers[f.id]||'')+'</textarea>';
+document.getElementById('formulaQuizPlay').innerHTML='<div class="quiz-container"><div class="quiz-header"><div class="quiz-progress"><div class="progress-bar"><div class="progress-fill" style="width:'+((idx+1)/total*100)+'%"></div></div><div class="progress-text">第 '+(idx+1)+' / '+total+' 题</div></div></div><div class="question-card"><div class="q-num"><span class="tag tag-blue">'+(f.type==='fill'?'填空':'简答')+'</span> '+f.level+' · '+f.category+'</div><div class="q-text">'+f.q+'</div>'+input+'</div><div class="quiz-nav"><button class="btn btn-secondary" style="visibility:'+(idx===0?'hidden':'visible')+'" onclick="fPrev()">上一题</button><button class="btn btn-primary" onclick="fNext()">'+(idx===total-1?'提交':'下一题')+'</button></div></div>';renderMath()}
+function fPrev(){if(State.formula.current>0){State.formula.current--;renderFormulaQuestion()}}
+function fNext(){if(State.formula.current<State.formula.questions.length-1){State.formula.current++;renderFormulaQuestion()}else submitFormulaQuiz()}
+function submitFormulaQuiz(){const qs=State.formula.questions;const ans=State.formula.answers;let correct=0;const wrong=[];
+qs.forEach(f=>{const ua=String(ans[f.id]||'').trim().toLowerCase().replace(/\s+/g,'');let isC=false;if(f.type==='fill'){const a=String(f.answer).trim().toLowerCase().replace(/\s+/g,'');isC=ua===a||ua.includes(a.replace(/[²^0-9+\-*\/()=]/g,''))}else{if(f.keywords&&f.keywords.length>0){let h=0;f.keywords.forEach(k=>{if(ua.includes(k.toLowerCase()))h++});isC=h/f.keywords.length>=0.6}}
+if(isC)correct++;else wrong.push(f)});
+const score=Math.round(correct/qs.length*100);
+let wh=wrong.length>0?'<div class="wrong-list"><h3>错题（'+wrong.length+'道）</h3>'+wrong.map(f=>'<div class="wrong-item"><div class="wi-header"><span class="tag tag-red">错题</span><span class="tag tag-gray">'+f.level+' · '+f.category+'</span></div><div class="wi-q">'+f.q+'</div><div class="wi-answers"><div class="wi-answer wi-user">你的答案：'+escHtml(String(ans[f.id]||'未作答'))+'</div><div class="wi-answer wi-correct">正确答案：'+escHtml(String(f.answer).slice(0,80))+'</div></div><div class="wi-explain"><strong>解析：</strong>'+(f.explain||'')+'</div></div>').join('')+'</div>':'<div style="text-align:center;padding:40px;color:var(--success)"><div style="font-size:3rem">🎉</div><p style="font-weight:700">全部正确！</p></div>';
+document.getElementById('formulaQuizPlay').style.display='none';document.getElementById('formulaQuizResult').style.display='block';
+document.getElementById('formulaQuizResult').innerHTML='<div class="result-container"><div class="score-ring"><svg width="180" height="180"><circle cx="90" cy="90" r="80" fill="none" stroke="var(--border)" stroke-width="12"/><circle cx="90" cy="90" r="80" fill="none" stroke="'+(score>=80?'var(--success)':score>=60?'var(--warning)':'var(--danger)')+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="'+(2*Math.PI*80)+'" stroke-dashoffset="'+(2*Math.PI*80*(1-score/100))+'"/></svg><div class="score-text"><div class="score-num">'+score+'</div><div class="score-label">分</div></div></div><div class="result-stats"><div class="result-stat"><div class="rs-num" style="color:var(--success)">'+correct+'</div><div class="rs-label">正确</div></div><div class="result-stat"><div class="rs-num" style="color:var(--danger)">'+wrong.length+'</div><div class="rs-label">错误</div></div><div class="result-stat"><div class="rs-num">'+qs.length+'</div><div class="rs-label">总题数</div></div></div>'+wh+'<div style="display:flex;gap:12px;justify-content:center;margin-top:24px"><button class="btn btn-primary" onclick="resetFormulaQuiz()">再来一组</button><button class="btn btn-secondary" onclick="navigate(\'home\')">返回首页</button></div></div>';renderMath()}
+function resetFormulaQuiz(){State.formula.phase='setup';document.getElementById('formulaQuizSetup').style.display='block';document.getElementById('formulaQuizPlay').style.display='none';document.getElementById('formulaQuizResult').style.display='none'}
+
+/* ===== 收藏夹 ===== */
+function renderFavorites(){const favs=Favorites.getAll();
+document.getElementById('favoritesList').innerHTML=favs.length>0?'<div class="error-list">'+favs.map(f=>'<div class="error-card" onclick="showFavDetail(\''+f.qid+'\')"><div class="ec-header"><span class="tag tag-orange">⭐ 收藏</span><span class="tag tag-gray">'+f.level+' · '+(f.moduleName||f.module)+'</span></div><div class="ec-q">'+f.q+'</div><div class="ec-meta"><span>收藏于 '+new Date(f.addDate).toLocaleDateString()+'</span></div></div>').join('')+'</div>':'<div class="empty-state"><p>还没有收藏的题目，做题时点击⭐收藏好题</p></div>'}
+function showFavDetail(qid){const f=Favorites.getAll().find(x=>x.qid===qid);if(!f)return;const ca=f.type==='choice'?(f.options?f.options[f.answer]:''):(f.type==='judge'?(f.answer?'正确':'错误'):String(f.answer));
+document.getElementById('errorDetailContent').innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="font-size:1.2rem;font-weight:700">收藏题目</h3><button class="btn-icon" onclick="document.getElementById(\'errorDetailModal\').classList.remove(\'show\')">✕</button></div><div style="margin-bottom:12px"><span class="tag tag-orange">⭐ 收藏</span> <span class="tag tag-gray">'+f.level+' · '+(f.moduleName||f.module)+'</span></div><div style="font-size:1rem;line-height:1.8;margin-bottom:16px">'+f.q+'</div><div class="wi-answer wi-correct" style="margin-bottom:12px">正确答案：'+escHtml(String(ca))+'</div><div class="wi-explain" style="margin-bottom:16px"><strong>解析：</strong>'+(f.explain||'暂无解析')+'</div><div style="display:flex;gap:10px"><button class="btn btn-danger" onclick="Favorites.remove(\''+f.qid+'\');document.getElementById(\'errorDetailModal\').classList.remove(\'show\');renderFavorites();showToast(\'已取消收藏\')">取消收藏</button></div>';
+document.getElementById('errorDetailModal').classList.add('show');renderMath()}
+
+/* ===== 学科中心 ===== */
+function renderModules(){const all=Object.values(MODULES).map(m=>({...m,downloaded:true,stats:MODULE_DATA[m.id].knowledge.length+'知识点 · '+MODULE_DATA[m.id].questions.length+'精选题 · '+MODULE_DATA[m.id].variants.length+'变式模板'}));
+document.getElementById('moduleGrid').innerHTML=all.map(m=>'<div class="module-card"><div class="mc-header"><div class="mc-icon" style="background:'+m.color+'15">'+m.icon+'</div><div class="mc-info"><h3>'+m.name+'</h3><p>'+(m.type==='standard'?'标准学科':'考试能力')+'</p></div></div><div class="mc-desc">'+m.desc+'</div><div class="mc-stats"><span>'+m.stats+'</span></div><button class="btn '+(State.currentModule===m.id?'btn-secondary':'btn-primary')+' mc-action" onclick="switchModule(\''+m.id+'\')">'+(State.currentModule===m.id?'当前使用中':'切换到此模块')+'</button></div>').join('')}
+
+/* ===== 设置 ===== */
+function exportData(){const data={version:'3.0',exportDate:new Date().toISOString(),module:State.currentModule,errors:ErrorBook.getAll(),favorites:Favorites.getAll(),stats:DB.get('stats',{}),streak:DB.get('streak',{}),feedbacks:DB.get('feedbacks',[])};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='学霸学习数据_'+new Date().toISOString().slice(0,10)+'.json';a.click();URL.revokeObjectURL(url);showToast('数据已导出')}
+function importData(event){const file=event.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{try{const data=JSON.parse(e.target.result);if(data.errors)DB.set('errors',data.errors);if(data.favorites)DB.set('favorites',data.favorites);if(data.stats)DB.set('stats',data.stats);if(data.streak)DB.set('streak',data.streak);showToast('数据导入成功');renderHome();renderErrors()}catch(err){showToast('导入失败：文件格式错误')}};reader.readAsText(file)}
+function resetAllData(){if(!confirm('确定要重置所有数据吗？错题、收藏、统计都将被清除，不可恢复！'))return;DB.clear();QuestionBank.clear();showToast('数据已重置');setTimeout(()=>location.reload(),1000)}
+function showInstallGuide(){document.getElementById('installPrompt').classList.remove('show');showToast('浏览器菜单 → 添加到主屏幕')}
+
+/* ===== PWA：动态manifest + Service Worker ===== */
+function initPWA(){
+const manifest={name:'学霸 - 智能学习平台',short_name:'学霸',description:'初中到大学全学科智能学习平台',start_url:'.',display:'standalone',background_color:'#ffffff',theme_color:'#4f6ef7',icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%234f6ef7%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-weight=%22bold%22>学</text></svg>',sizes:'192x192',type:'image/svg+xml'}]};
+const blob=new Blob([JSON.stringify(manifest)],{type:'application/json'});
+const manifestUrl=URL.createObjectURL(blob);
+const link=document.createElement('link');link.rel='manifest';link.href=manifestUrl;document.head.appendChild(link);
+if('serviceWorker'in navigator){
+const swCode='const C="xueba-v3";self.addEventListener("install",e=>{self.skipWaiting()});self.addEventListener("activate",e=>{e.waitUntil(clients.claim())});self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(caches.open(C).then(c=>c.match(e.request).then(r=>{if(r)return r;return fetch(e.request).then(res=>{try{c.put(e.request,res.clone())}catch(err){}return res})})))})});';
+const swBlob=new Blob([swCode],{type:'application/javascript'});
+const swUrl=URL.createObjectURL(swBlob);
+navigator.serviceWorker.register(swUrl).then(()=>console.log('SW注册成功')).catch(()=>console.log('SW注册失败'));
+}
+setTimeout(()=>{if(!DB.get('installPromptShown',false)&&window.matchMedia('(display-mode:browser)').matches){document.getElementById('installPrompt').classList.add('show');DB.set('installPromptShown',true)}},3000)}
+
+/* ===== 路由 ===== */
+function navigate(view){location.hash='#/'+view}
+function handleRoute(){const hash=location.hash.replace('#/','')||'home';const views=['home','knowledge','quiz','errors','formula','favorites','modules','settings'];const view=views.includes(hash)?hash:'home';
+document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const el=document.getElementById('view-'+view);if(el)el.classList.add('active');
+document.querySelectorAll('.topbar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.view===view));
+if(view==='home')renderHome();else if(view==='knowledge')renderKnowledgeSidebar();else if(view==='quiz'){if(State.quiz.phase==='setup')renderQuizSetup()}else if(view==='errors')renderErrors();else if(view==='formula'){if(State.formula.tab==='list')renderFormulaList()}else if(view==='favorites')renderFavorites();else if(view==='modules')renderModules();
+window.scrollTo(0,0)}
+window.addEventListener('hashchange',handleRoute);
+
+/* ===== 初始化 ===== */
+async function init(){
+initDarkMode();
+initPWA();
+document.getElementById('currentModuleName').textContent=getCurrentModule().name;
+const lv=getCurrentModule().levels[0];
+State.knowledge.level=lv;State.quiz.level=lv;
+handleRoute();
+if(window.renderMathInElement)renderMath();else{const check=setInterval(()=>{if(window.renderMathInElement){renderMath();clearInterval(check)}},200)}
+if(!DB.get('onboardingDone',false)){setTimeout(startOnboarding,500)}
+console.log('学霸 V3.0 PWA完整版已启动');
+}
+document.addEventListener('DOMContentLoaded',async()=>{
+await DB.open();
+await QuestionBank.open();
+init();
+BankInitializer.init();
+});
+</script>
+</body>
+</html>
